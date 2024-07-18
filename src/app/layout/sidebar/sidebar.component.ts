@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
   navData = navbarData;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize(event: UIEvent) {
     this.screenWidth = window.innerWidth;
     if(this.screenWidth <= 768 ) {
       this.collapsed = false;
@@ -41,11 +41,6 @@ export class SidebarComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
-  }
-
-  closeSidenav(): void {
-    this.collapsed = false;
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 }

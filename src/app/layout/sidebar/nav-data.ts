@@ -1,32 +1,32 @@
 export const  navbarData = [
     {
         routeLink: '/main',
-        icon: 'home',
+        icon: 'bi bi-house-door-fill',
         label: 'Inicio'
     },
     {
         routeLink: '/map',
-        icon: 'map',
+        icon: 'bi bi-map-fill',
         label: 'Mapas'
     },
     {
         routeLink: '/activities',
-        icon: 'event_list',
-        label: 'lugares guardados'
+        icon: 'bi bi-calendar-event-fill',
+        label: 'Actividades'
     },
     {
         routeLink: '/saved-places',
-        icon: 'bookmark',
+        icon: 'bi bi-bookmark-fill',
         label: 'lugares guardados'
     },
     {
         routeLink: '/user-manager',
-        icon: 'group',
+        icon: 'bi bi-people-fill',
         label: 'Usuarios'
     },
     {
         routeLink: '/settings',
-        icon: 'settings',
+        icon: 'bi bi-gear-fill',
         label: 'Configuraciones'
     },
 ];
