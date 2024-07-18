@@ -3,7 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "./layout/sidebar/sidebar.component";
 import { BodyComponent } from './layout/body/body.component';
 import { HeaderComponent } from "./layout/header/header.component";
-import { MainComponent } from "./pages/main/main.component";
+import { MainComponent } from './pages/main/main.component';
+
 
 
 interface SideNavToggle {
