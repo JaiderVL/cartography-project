@@ -5,5 +5,4 @@ import { Component } from '@angular/core';
   styleUrl: './maps-layout.component.css'
 })
 export class MapsLayoutComponent {
-
 }
