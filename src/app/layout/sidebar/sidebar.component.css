@@ -85,9 +85,13 @@
   color: #000;
 }
 
-.active .sidenav-link-icon,
-.active .sidenav-link-text {
-  color: #000;
+.active{
+  background-color: #fff;
+  .sidenav-link-icon,
+  .sidenav-link-text{
+    
+    color: black;
+  }
 }
 
 .logout-container {
@@ -150,7 +154,7 @@
   .sidenav-nav-link {
     height: auto;
   }
-
+  
   .logout-container {
     position: static;
     bottom: auto;

@@ -1,3 +1,20 @@
-import { Routes } from '@angular/router';
+// src/app/app.routes.ts
 
-export const routes: Routes = [];
+import { Routes } from '@angular/router';
+import { MainComponent } from './pages/main/main.component';
+import { MapComponent } from './pages/map/map.component';
+import { SavedPlacesComponent } from './pages/saved-places/saved-places.component';
+import { ActivitiesComponent } from './pages/activities/activities.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { UserManagerComponent } from './pages/user-manager/user-manager.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
+  { path: 'main', component: MainComponent },
+  { path: 'map', component: MapComponent },
+  { path: 'saved-places', component: SavedPlacesComponent },
+  { path: 'activities', component: ActivitiesComponent },
+  { path: 'settings', component: SettingsComponent },
+  { path: 'user-manager', component: UserManagerComponent },
+  { path: '**', redirectTo: '/main' }
+];
