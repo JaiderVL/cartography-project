@@ -1,0 +1,79 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+      <div class="row mb-3">
+          <div class="col">
+              <div class="form-group">
+                  <label for="name" class="form-label">Nombre</label>
+                  <input type="text" id="name" class="form-control" [class.is-invalid]="name.invalid && name.touched" [placeholder]="name.invalid && name.touched ? 'Nombre obligatorio' : 'nombre'" required [(ngModel)]="user.name" name="name" #name="ngModel">
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="lastname" class="form-label">Apellido</label>
+                  <input type="text" id="lastname" class="form-control" [class.is-invalid]="lastname.invalid && lastname.touched" [placeholder]="lastname.invalid && lastname.touched ? 'Apellido obligatorio' : 'Apellido'" required [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
+              </div>
+          </div>
+      </div>
+      <div class="row mb-3">
+          <div class="col">
+              <div class="form-group">
+                  <label for="email" class="form-label">Correo</label>
+                  <input type="email" id="email" class="form-control" [class.is-invalid]="email.invalid && email.touched" [placeholder]="email.invalid && email.touched ? 'Correo obligatorio' : 'correo@example.com'" required email [(ngModel)]="user.email" name="email" #email="ngModel">
+                  <div *ngIf="email.invalid && email.touched" class="text-danger mt-1">
+                      {{ email.errors?.['email'] ? 'Formato de correo no válido.' : '' }}
+                  </div>
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" id="password" class="form-control" [class.is-invalid]="password.invalid && password.touched" [placeholder]="password.invalid && password.touched ? 'Contraseña obligatoria' : 'Contraseña'" required minlength="6" [(ngModel)]="user.password" name="password" #password="ngModel">
+                  <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
+                      {{ password.errors?.['minlength'] ? 'Contraseña debe tener al menos 6 caracteres.' : '' }}
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row mb-3">
+          <div class="col">
+              <div class="form-group">
+                  <label for="zone" class="form-label">Zona</label>
+                  <select id="zone" class="form-control" [class.is-invalid]="zone.invalid && zone.touched" required [(ngModel)]="user.zone" name="zone" #zone="ngModel">
+                      <option value="" disabled selected>Selecione la zona</option>
+                      <option value="norte">Norte</option>
+                      <option value="sur">Sur</option>
+                      <option value="oeste">Oeste</option>
+                  </select>
+                  <div *ngIf="zone.invalid && zone.touched" class="text-danger mt-1">
+                      Zona es obligatorio.
+                  </div>
+              </div>
+          </div>
+          <div class="col">
+              <div class="form-group">
+                  <label for="rol" class="form-label">Rol</label>
+                  <select id="rol" class="form-control" [class.is-invalid]="rol.invalid && rol.touched" required [(ngModel)]="user.rol" name="rol" #rol="ngModel">
+                      <option value="" disabled selected>Selecione el rol</option>
+                      <option value="usuario">Usuario</option>
+                      <option value="admin">Admin</option>
+                      <option value="lider_de_zona">Líder de Zona</option>
+                  </select>
+                  <div *ngIf="rol.invalid && rol.touched" class="text-danger mt-1">
+                      Rol es obligatorio.
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-4 col-12 text-start mb-2 mb-md-0">
+            <button type="submit" class="btn btn-outline-success w-100" [disabled]="userForm.invalid">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+        </div>
+        <div class="col-md-4 col-12 text-center mb-2 mb-md-0">
+            <button *ngIf="!isEditMode" type="button" class="btn btn-outline-warning w-100" (click)="resetForm(userForm)">Limpiar</button>
+        </div>
+        <div class="col-md-4 col-12 text-end mb-2 mb-md-0">
+            <button type="button" class="btn btn-outline-danger w-100" (click)="onClose()">Cerrar</button>
+        </div>
+    </div>
+  </form>
+</div>

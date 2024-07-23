@@ -6,6 +6,9 @@ import { BodyComponent } from './layout/body/body.component';
 import { HeaderComponent } from "./layout/header/header.component";
 import { MainComponent } from './pages/main/main.component';
 import { MapComponent } from './pages/map/map.component';
+import { UserManagerComponent } from "./pages/user-manager/user-manager.component";
+import { UserFormComponent } from "./pages/user-manager/user-form/user-form.component";
+
 
 interface SideNavToggle {
   screenWidth: number;
@@ -14,7 +17,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent, BodyComponent, MainComponent, CommonModule, MapComponent],
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, BodyComponent, MainComponent, CommonModule, MapComponent,UserManagerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
