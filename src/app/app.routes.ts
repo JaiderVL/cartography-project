@@ -13,4 +13,5 @@ export const routes: Routes = [{path: '', redirectTo: 'dashboard', pathMatch: 'f
     {path: 'activities', component: ActivitiesComponent},
     {path: 'saved-places', component: SavedPlacesComponent},
     {path: 'settings', component: SettingsComponent},
-    {path: 'user-manager', component: UserManagerComponent},];
+    {path: 'user-manager', component: UserManagerComponent},
+];
