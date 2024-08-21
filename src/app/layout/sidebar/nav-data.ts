@@ -5,7 +5,7 @@ export const  navbarData = [
         label: 'Inicio'
     },
     {
-        routeLink: '/map',
+        routeLink: '/maps',
         icon: 'bi bi-map-fill',
         label: 'Mapas'
     },
