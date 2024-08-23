@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { SidebarComponent } from "./layout/sidebar/sidebar.component";
 import { BodyComponent } from './layout/body/body.component';
 import { HeaderComponent } from "./layout/header/header.component";
@@ -13,7 +14,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent ,SidebarComponent, BodyComponent, MainComponent],
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, BodyComponent, MainComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

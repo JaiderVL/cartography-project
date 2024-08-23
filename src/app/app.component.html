@@ -1,8 +1,9 @@
-
-<app-header></app-header>
-<app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
-<app-body
-    [collapsed]="isSideNavCollapsed"
-    [screenWidth]="screenWidth"
-></app-body>
-<router-outlet></router-outlet>
+<div class="wrapper">
+    <div class="sidenav" [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
+        <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+    </div>
+    <div [ngClass]="isSideNavCollapsed ? 'content-collapsed' : 'content-expanded'">
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+    </div>
+</div>

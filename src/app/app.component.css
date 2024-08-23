@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.sidenav {
+  background: linear-gradient(to bottom, rgba(52, 55, 72, 0.9), rgba(0, 0, 0, 0.9));
+  transition: all 0.5s ease;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 5rem;
+  height: 100vh;
+}
+
+.sidenav-collapsed {
+  width: 16.5625rem;
+}
+
+.content-expanded {
+  margin-left: 5rem;
+  transition: margin-left 0.3s ease;
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.content-collapsed {
+  margin-left: 16.5625rem;
+  transition: margin-left 0.3s ease;
+  padding: 15px;
+  flex-grow: 1;
+}
