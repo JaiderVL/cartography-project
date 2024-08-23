@@ -1,9 +1,16 @@
 <div class="wrapper">
+    <header class="right-section">
+        <app-header></app-header>
+    </header>
     <div class="sidenav" [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
         <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
     </div>
     <div [ngClass]="isSideNavCollapsed ? 'content-collapsed' : 'content-expanded'">
-        <app-header class="header"></app-header>
-        <router-outlet></router-outlet>
+        <div>
+            <app-map *ngIf="showMap"></app-map>
+        </div>
+        <div class="router-outlet">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

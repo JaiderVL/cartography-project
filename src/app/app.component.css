@@ -1,13 +1,30 @@
 .wrapper {
   display: flex;
   height: 100vh;
+  width: 100wh;
+  z-index: 1;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: auto;
+  height: 80px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  color: white;
+  z-index: 1000;
 }
 
 .sidenav {
   background: linear-gradient(to bottom, rgba(52, 55, 72, 0.9), rgba(0, 0, 0, 0.9));
   transition: all 0.5s ease;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 5rem;
@@ -22,18 +39,25 @@
   margin-left: 5rem;
   transition: margin-left 0.3s ease;
   flex-grow: 1;
+  margin-top: 0;
 }
 
 .content-collapsed {
   margin-left: 16.5625rem;
   transition: margin-left 0.3s ease;
   flex-grow: 1;
+  margin-top: 0;
 }
 
-.header {
-  position:fixed;
-  top: 20px;
-  left: 90px;
-  z-index: 999;
-  width: 180px;
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.router-outlet {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
 }

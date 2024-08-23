@@ -1,5 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LngLat, Map, Marker } from 'mapbox-gl';
+import { ParkImageService } from '../../core/services/parkImage.service';
+import { environment } from '../../../environments/environments';
+
+import mapboxgl from 'mapbox-gl';
+mapboxgl.accessToken = environment.mapbox_key;
 
 interface MarkerAndColor {
   color: string;
@@ -12,10 +19,13 @@ interface PlainMarker {
 }
 
 @Component({
-  templateUrl: './marker-page.component.html',
-  styleUrl: './marker-page.component.css'
+  selector: 'app-map',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './map.component.html',
+  styleUrl: './map.component.css'
 })
-export class MarkerPageComponent {
+export class MapComponent {
   @ViewChild('map') divMap?: ElementRef;
 
   public markers: MarkerAndColor[] = [];
@@ -24,35 +34,39 @@ export class MarkerPageComponent {
   public map?: Map;
   public currentPosition: LngLat = new LngLat(-74.3740312, 4.3391638);
 
+  constructor(private route: ActivatedRoute,
+    private parkImageService: ParkImageService,
+  ) { }
+
   ngAfterViewInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const lng = parseFloat(params['lng']);
+      const lat = parseFloat(params['lat']);
+      this.initializeMap();
+      if (lng || lat) {
+        this.addMarker(new LngLat(lng, lat), '#ff0000');
+      } else {
+        this.loadDefaultMarkers();
+      }
+    });
+  }
+
+  initializeMap() {
     if (!this.divMap) throw 'El elemento HTML no fue encontrado';
 
     this.map = new Map({
-      container: this.divMap.nativeElement, // container ID
-      style: 'mapbox://styles/mapbox/streets-v12', // style URL
-      center: this.currentPosition, // starting position [lng, lat]
-      zoom: this.currentZoom, // starting zoom
+      container: this.divMap.nativeElement,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [-74.36476117425241, 4.338275508822856],
+      zoom: 13,
     });
-
-    this.readFromLocalStorage();
-    /*
-        const markerHtml = document.createElement('div');
-        markerHtml.innerHTML = 
-    
-        const marker = new Marker({
-          color: '#xxxxxx'.replace(/x/g, y => (Math.random() * 16 | 0).toString(16))
-        })
-          .setLngLat(this.currentPosition)
-          .addTo(this.map);
-          */
   }
 
   createMarker() {
     if (!this.map) return;
 
-    const color = '#xxxxxx'.replace(/x/g, y => (Math.random() * 16 | 0).toString(16));
     const lnglat = this.map.getCenter();
-    this.addMarker(lnglat, color)
+    this.addMarker(lnglat, this.generateRandomColor())
   }
 
   addMarker(lnglat: LngLat, color: string) {
@@ -73,12 +87,14 @@ export class MarkerPageComponent {
     this.markers.splice(index, 1);
   }
 
-  flyTo(marker: Marker) {
+  flyToPosition(lng: number, lat: number) {
+    const position = new LngLat(lng, lat);
     this.map?.flyTo({
       zoom: 14,
-      center: marker.getLngLat()
+      center: position
     });
   }
+
 
   saveToLocalStorage() {
     const plainMarker: PlainMarker[] = this.markers.map(({ color, marker }) => {
@@ -98,5 +114,15 @@ export class MarkerPageComponent {
       const coordinates = new LngLat(lng, lat);
       this.addMarker(coordinates, color);
     })
+  }
+
+  loadDefaultMarkers() {
+    this.parkImageService.getImages().forEach(image => {
+      this.addMarker(new LngLat(image.lng, image.lat), this.generateRandomColor());
+    })
+  }
+
+  generateRandomColor(): string {
+    return '#xxxxxx'.replace(/x/g, y => (Math.random() * 16 | 0).toString(16));
   }
 }

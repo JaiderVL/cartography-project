@@ -1,20 +1,26 @@
-/* body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #131315; 
-    color: white;
-} */
-
 header {
     height: 80px;
-    background: transparent; /* Fondo transparente */
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     color: white;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: white;
+    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
 }
 
 .left-section {
@@ -29,13 +35,6 @@ header {
     font-weight: 600;
 }
 
-.right-section {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
 .nav-btn {
     color: white;
     border: none;
@@ -46,36 +45,31 @@ header {
     font-size: 16px;
 }
 
-.nav-btn:hover {}
-
 .register-btn {
     border-radius: 20px ;
     background-color: #4A3AFF;
     font-weight: 400; 
 }
 
-/* Estilos específicos para los botones de icono */
 .icon-btn {
-    background: transparent; /* Fondo transparente */
-    width: 40px; /* Tamaño cuadrado */
+    background: transparent; 
+    width: 40px;
     height: 40px;
-    padding: 0; /* Elimina el padding */
+    padding: 0;
     margin-left: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; /* Hace los botones redondos */
+    border-radius: 50%;
+    background-color: #4A3AFF;
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1); /* Efecto hover para los botones icono */
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Estilos adicionales específicos para cada icono */
-.bell-icon {
-    /* Estilos específicos para el icono de campana */
-}
-
-.user-icon {
-    /* Estilos específicos para el icono de usuario */
+.items {
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
