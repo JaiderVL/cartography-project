@@ -24,6 +24,8 @@
     "dotenv": "^16.4.5",
     "firebase": "^10.13.2",
     "mapbox-gl": "^3.6.0",
+    "bootstrap-icons": "^1.11.3",
+    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
