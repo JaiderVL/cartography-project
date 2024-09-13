@@ -1,1 +1,64 @@
-<p>activities works!</p>
+<div class="container">
+  <div class="left">
+    <div class="calendar">
+      <div class="month">
+        <i class="bi bi-arrow-left-short prev" #prev></i>
+        <div class="date" #date>December 2015</div>
+        <i class="bi bi-arrow-right-short next" #next></i>
+      </div>
+      <div class="weekdays">
+        <div>Dom</div>
+        <div>Lun</div>
+        <div>Mar</div>
+        <div>Mié</div>
+        <div>Jue</div>
+        <div>Vie</div>
+        <div>Sáb</div>
+      </div>
+      <div class="days" #days>
+      </div>
+      <div class="goto-today">
+        <div class="goto">
+          <input type="text" placeholder="mm/yyyy" class="date-input" #dateInput />
+          <button class="goto-btn" #gotoBtn>ir</button>
+        </div>
+        <button class="today-btn" #todayBtn>hoy</button>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="today-date">
+      <div class="event-day" #eventDay></div>
+      <div class="event-date" #eventDate></div>
+    </div>
+    <div class="events" #eventsContainer></div>
+
+    <div class="add-event-wrapper" #addEventWrapper>
+      <div class="add-event-header">
+        <div class="title">Agregar evento</div>
+        <i class="bi bi-x-lg close" #addEventCloseBtn></i>
+      </div>
+      <div class="add-event-body">
+        <div class="add-event-input">
+          <input type="text" placeholder="Event Name" class="event-name" #addEventTitle />
+        </div>
+        <div class="add-event-input">
+          <input type="text" placeholder="Event Time From" class="event-time-from" #addEventFrom />
+        </div>
+        <div class="add-event-input">
+          <input type="text" placeholder="Event Time To" class="event-time-to" #addEventTo />
+        </div>
+        <!-- Nuevo campo para el nombre del parque, debajo de "Event Time To" -->
+        <div class="add-event-input">
+          <input type="text" placeholder="Park Name" class="event-park" #addEventPark />
+        </div>
+      </div>
+      <div class="add-event-footer">
+        <button class="add-event-btn" #addEventSubmit>Add Event</button>
+      </div>
+    </div>
+  </div>
+  <button class="add-event" #addEventBtn>
+    <i class="bi bi-calendar-event"></i>
+  </button>
+</div>
