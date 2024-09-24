@@ -7,11 +7,27 @@ import { UserManagerComponent } from "./pages/user-manager/user-manager.componen
 import { MapComponent } from "./pages/map/map.component";
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-    {path: 'main', component: MainComponent},
-    {path: 'map', component: MapComponent},
-    {path: 'activities', component: ActivitiesComponent},
-    {path: 'saved-places', component: SavedPlacesComponent},
-    {path: 'settings', component: SettingsComponent},
-    {path: 'user-manager', component: UserManagerComponent},
+
+  {
+    path:'auth',
+    // guards
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path:'dashboard',
+    // guards
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+  },
+  {
+    path:'**',
+  redirectTo: 'auth'
+  },
+
+    // {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    // {path: 'main', component: MainComponent},
+    // {path: 'map', component: MapComponent},
+    // {path: 'activities', component: ActivitiesComponent},
+    // {path: 'saved-places', component: SavedPlacesComponent},
+    // {path: 'settings', component: SettingsComponent},
+    // {path: 'user-manager', component: UserManagerComponent},
   ];
