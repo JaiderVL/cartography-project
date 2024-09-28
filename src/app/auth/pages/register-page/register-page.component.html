@@ -28,10 +28,47 @@
         <div class="line"></div>
 
         <div class="media-options">
-            <a href="#" class="field google">
+            <button (click)="loginWithGoogle()" class="field google">
                 <img src="assets/images/google.png" alt="" class="google-img">
                 <span>Login with Google</span>
-            </a>
+            </button>
         </div>
     </div>
 </form>
+
+
+
+
+
+<!-- src
+|    app
+|    |    auth
+|    |    |    guards
+|    |    |    layouts
+|    |    |    |    authlayout.componen.html
+|    |    |    |    authlayout.componen.ts
+|    |    |    pages
+|    |    |    |    login-page
+|    |    |    |    |    login-page.component.html
+|    |    |    |    |    login-page.component.ts
+|    |    |    |     register
+|    |    |    |     |   register-page.component.html
+|    |    |    |     |   register-page.component.ts
+|    |    |    |     page.component.css
+|    |    |    services
+|    |    |    |    auth.service.ts
+|    |    |    auth-routing.module.ts
+|    |    |    auth.module.ts
+|    |    app.component.css
+|    |    app.component.html
+|    |    app.component.ts
+|    |    app.config.ts
+|    |    app.routes.ts
+|    assets
+|    |    images
+|    |        google.png
+|    environments
+|    |    environments.ts
+|    index.hmtl
+|    main.ts
+|    style.css -->

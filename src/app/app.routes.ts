@@ -5,22 +5,29 @@ import { SavedPlacesComponent } from "./pages/saved-places/saved-places.componen
 import { SettingsComponent } from "./pages/settings/settings.component";
 import { UserManagerComponent } from "./pages/user-manager/user-manager.component";
 import { MapComponent } from "./pages/map/map.component";
+import { HomePageComponent } from "./auth/pages/home-page/home-page.component";
+import { AuthGuard } from './auth/guards/auth.guard';
 
 export const routes: Routes = [
 
   {
-    path:'auth',
+    path: 'auth',
     // guards
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path:'dashboard',
+    path: 'dashboard',
     // guards
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
-    path:'**',
-  redirectTo: 'auth'
+    path: 'home', // Nueva ruta para la página de inicio
+    component: HomePageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'auth',
   },
 
     // {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
