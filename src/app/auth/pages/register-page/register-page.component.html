@@ -1,14 +1,15 @@
 <p>register-page works!</p>
-<div class="form signup">
-    <div class="form-content">
-        <header>Signup</header>
-        <form action="#">
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> <!-- Formulario correcto -->
+    <div class="form signup">
+        <div class="form-content">
+            <header>Signup</header>
             <div class="field input-field">
-                <input type="email" placeholder="Email" class="input">
+                <input type="email" formControlName="email" placeholder="Email" class="input">
             </div>
 
             <div class="field input-field">
-                <input type="password" placeholder="Create password" class="password">
+                <input type="password" formControlName="password" placeholder="Create password" class="password">
             </div>
 
             <div class="field input-field">
@@ -17,22 +18,21 @@
             </div>
 
             <div class="field button-field">
-                <button>Signup</button>
+                <button type="submit" [disabled]="registerForm.invalid">Signup</button>
             </div>
-        </form>
 
-        <div class="form-link">
-            <span>Already have an account? <a href="#" routerlink="register" class="link login-link">Login</a></span>
+            <div class="form-link">
+                <span>Already have an account? <a routerLink="/auth/login" class="link login-link">Login</a></span>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="media-options">
+            <a href="#" class="field google">
+                <img src="assets/images/google.png" alt="" class="google-img">
+                <span>Login with Google</span>
+            </a>
         </div>
     </div>
-
-    <div class="line"></div>
-
-    <div class="media-options">
-        <a href="#" class="field google">
-            <img src="assets/images/google.png" alt="" class="google-img">
-            <span>Login with Google</span>
-        </a>
-    </div>
-
-</div>
+</form>

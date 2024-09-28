@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './authlayout.component.html',
-  styleUrl: './authlayout.component.css'
+  styleUrls: ['./authlayout.component.css'] // Cambiar styleUrl a styleUrls
 })
 export class AuthlayoutComponent {
 

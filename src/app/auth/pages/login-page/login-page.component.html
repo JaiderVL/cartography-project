@@ -4,30 +4,29 @@
 <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
 
+<p>login-page works!</p>
+<!-- login-page.component.html -->
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form login">
         <div class="form-content">
             <header>Login</header>
-            <form action="#">
-                <div class="field input-field">
-                    <input type="email" placeholder="Email" class="input">
-                </div>
+            <div class="field input-field">
+                <input type="email" formControlName="email" placeholder="Email" class="input">
+            </div>
+            <div class="field input-field">
+                <input type="password" formControlName="password" placeholder="Password" class="password">
+                <i class='bx bx-hide eye-icon'></i>
+            </div>
+            <div class="form-link">
+                <a href="#" class="forgot-pass">Forgot password?</a>
+            </div>
 
-                <div class="field input-field">
-                    <input type="password" placeholder="Password" class="password">
-                    <i class='bx bx-hide eye-icon'></i>
-                </div>
-
-                <div class="form-link">
-                    <a href="#" class="forgot-pass">Forgot password?</a>
-                </div>
-
-                <div class="field button-field">
-                    <button>Login</button>
-                </div>
-            </form>
+            <div class="field button-field">
+                <button type="submit" [disabled]="loginForm.invalid">Login</button>
+            </div>
 
             <div class="form-link">
-                <span>Don't have an account? <a href="#" linkrouter="/auth/register" class="link signup-link">Signup</a></span>
+                <span>Don't have an account? <a routerLink="/auth/register" class="link signup-link">Signup</a></span>
             </div>
         </div>
 
@@ -35,9 +34,9 @@
 
         <div class="media-options">
             <a href="#" class="field google">
-                <img src="/assets/images/google.png" alt="" class="google-img">
+                <img src="assets/images/google.png" alt="" class="google-img">
                 <span>Login with Google</span>
             </a>
         </div>
-
     </div>
+</form>

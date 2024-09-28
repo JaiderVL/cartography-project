@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule],
-  templateUrl : './login-page.component.html',
-  styleUrl: '../page.component.css'
+  templateUrl: './login-page.component.html',
+  styleUrls: ['../page.component.css'] // Cambiar styleUrl a styleUrls
 })
 
 
