@@ -1,5 +1,15 @@
-<div class="home-container">
-  <h1>Welcome to the Home Page!</h1>
-  <p>You have successfully logged in.</p>
-  <button (click)="logout()">Logout</button>
+<div *ngIf="role === 'super_usuario'">
+  <!-- Contenido exclusivo para super_usuario -->
+  <h1>Bienvenido, Super Usuario</h1>
+  <p>Aquí va contenido especial para los super usuarios.</p>
 </div>
+
+<div *ngIf="role === 'usuario_normal'">
+  <!-- Contenido exclusivo para usuario_normal -->
+  <h1>Bienvenido, Usuario Normal</h1>
+  <p>Este es el contenido para un usuario normal.</p>
+</div>
+
+<!-- Opción para cerrar sesión -->
+<button (click)="logout()">Cerrar sesión</button>
+
