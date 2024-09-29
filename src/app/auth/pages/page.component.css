@@ -124,9 +124,20 @@ form{
     background-color: #0171d3;
     transition: all 0.3s ease;
     cursor: pointer;
+    outline: none;
 }
 .field button:hover{
     background-color: #016dcb;
+}
+
+.field button:disabled {
+    background-color: #b3d1ff; /* Color diferente para botón deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor a no permitido */
+}
+
+.field button:active {
+    transform: scale(0.98); /* Achica un poco el botón */
+    background-color: #015bb7; /* Cambia el color cuando se presiona */
 }
 .form-link{
     text-align: center;
@@ -167,22 +178,7 @@ form{
     align-items: center;
     justify-content: center;
 }
-a.facebook{
-    color: #fff;
-    background-color: #4267b2;
-}
-a.facebook .facebook-icon{
-    height: 28px;
-    width: 28px;
-    color: #0171d3;
-    font-size: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-.facebook-icon,
+
 img.google-img{
     position: absolute;
     top: 50%;
@@ -197,7 +193,16 @@ img.google-img{
     padding: 10px 15px; /* Ajusta el padding si es necesario */
     cursor: pointer;
     background-color: #fff; /* Fondo blanco para resaltar */
-    transition: border-color 0.3s ease; /* Transición suave al cambiar el borde */
+    transition: all 0.3s ease;
+}
+.field.google:hover {
+    border-color: #707070; /* Cambia el borde al pasar el ratón si lo deseas */
+}
+
+/* Efecto al presionar el botón */
+.field.google:active {
+    transform: scale(0.98); /* Achica un poco el botón */
+    background-color: #f0f0f0; /* Cambia el fondo cuando se presiona */
 }
 img.google-img{
     height: 20px;
@@ -213,6 +218,11 @@ a.google span{
     opacity: 0.6;
     color: #232836;
 }
+.error-message {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
 
 @media screen and (max-width: 400px) {
     .form{

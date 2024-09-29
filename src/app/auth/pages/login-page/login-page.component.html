@@ -1,40 +1,54 @@
-<!-- CSS -->
-<link rel="stylesheet" href="../page.component.css">  
-<!-- Boxicons CSS -->
-<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-
-<!-- login-page.component.html -->
 <form class="container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form login">
+    <!-- Mensaje de Carga -->
+    <div *ngIf="isLoading" class="loading-message">
+        <p>Espera un momento...</p>
+    </div>
+
+    <div class="form login" *ngIf="!isLoading"> <!-- Ocultar el formulario mientras se carga -->
         <div class="form-content">
-            <header>Login</header>
-            <div class="field input-field">
-                <input type="email" formControlName="email" placeholder="Email" class="input">
-            </div>
-            <div class="field input-field">
-                <input type="password" formControlName="password" placeholder="Password" class="password">
-                <i class='bx bx-hide eye-icon'></i>
-            </div>
-            <div class="form-link">
-                <a href="#" class="forgot-pass">Forgot password?</a>
-            </div>
+        <header>Login</header>
+        <!-- Mostrar mensaje de error si las credenciales son incorrectas -->
+        <div *ngIf="errorMessage" class="error-message">
+        <p style="color: red;">{{ errorMessage }}</p>
+        </div>
 
-            <div class="field button-field">
-                <button type="submit" [disabled]="loginForm.invalid">Login</button>
-            </div>
-
-            <div class="form-link">
-                <span>Don't have an account? <a routerLink="/auth/register" class="link signup-link">Signup</a></span>
+        <div class="field input-field">
+        <input type="email" formControlName="email" placeholder="Email" class="input">
+        <!-- Mensaje de error si el email no es válido -->
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <p style="color: red;">Please enter a valid email address.</p>
             </div>
         </div>
 
-        <div class="line"></div>
-
-        <div class="media-options">
-            <button (click)="loginWithGoogle()" class="field google">
-                <img src="assets/images/google.png" alt="" class="google-img">
-                <span>Login with Google</span>
-            </button>
+        <div class="field input-field">
+        <input type="password" formControlName="password" placeholder="Password" class="password">
+        <i class='bx bx-hide eye-icon'></i>
+        <!-- Mensaje de error si la contraseña no cumple los requisitos -->
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <p style="color: red;">Password must be at least 6 characters.</p>
         </div>
+        </div>
+
+        <div class="form-link">
+        <a href="#" class="forgot-pass">Forgot password?</a>
+        </div>
+
+        <div class="field button-field">
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        </div>
+
+        <div class="form-link">
+        <span>Don't have an account? <a routerLink="/auth/register" class="link signup-link">Signup</a></span>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="media-options">
+        <button (click)="loginWithGoogle()" class="field google">
+        <img src="assets/images/google.png" alt="" class="google-img">
+        <span>Login with Google</span>
+        </button>
+    </div>
     </div>
 </form>
