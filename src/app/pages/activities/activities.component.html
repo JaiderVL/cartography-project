@@ -1,64 +1,155 @@
-<div class="container">
-  <div class="left">
-    <div class="calendar">
-      <div class="month">
-        <i class="bi bi-arrow-left-short prev" #prev></i>
-        <div class="date" #date>December 2015</div>
-        <i class="bi bi-arrow-right-short next" #next></i>
-      </div>
-      <div class="weekdays">
-        <div>Dom</div>
-        <div>Lun</div>
-        <div>Mar</div>
-        <div>Mié</div>
-        <div>Jue</div>
-        <div>Vie</div>
-        <div>Sáb</div>
-      </div>
-      <div class="days" #days>
-      </div>
-      <div class="goto-today">
-        <div class="goto">
-          <input type="text" placeholder="mm/yyyy" class="date-input" #dateInput />
-          <button class="goto-btn" #gotoBtn>ir</button>
+<div class="wrapper">
+  <div class="container">
+    <div class="left">
+      <div class="calendar">
+        <div class="month">
+          <i class="bi bi-arrow-left-short prev" (click)="prevMonth()"></i>
+          <div class="date">{{ months[month] }} {{ year }}</div>
+          <i class="bi bi-arrow-right-short next" (click)="nextMonth()"></i>
         </div>
-        <button class="today-btn" #todayBtn>hoy</button>
+        <div class="weekdays">
+          <div>Dom</div>
+          <div>Lun</div>
+          <div>Mar</div>
+          <div>Mié</div>
+          <div>Jue</div>
+          <div>Vie</div>
+          <div>Sáb</div>
+        </div>
+        <div class="days">
+          <div
+            *ngFor="let day of days"
+            [ngClass]="{
+              'prev-date': !day.isCurrentMonth && day.month < month,
+              'next-date': !day.isCurrentMonth && day.month > month,
+              'event': day.hasEvent,
+              'today': day.isToday,
+              'active': day === activeDay
+            }"
+            (click)="onDayClick(day)"
+            class="day"
+          >
+            {{ day.date }}
+          </div>
+        </div>
+        <div class="goto-today">
+          <div class="goto">
+            <input
+              type="text"
+              placeholder="mm/yyyy"
+              class="date-input"
+              #dateInput
+            />
+            <button class="goto-btn" (click)="gotoDate(dateInput.value)">Ir</button>
+          </div>
+          <button class="today-btn" (click)="goToToday()">Hoy</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="right">
-    <div class="today-date">
-      <div class="event-day" #eventDay></div>
-      <div class="event-date" #eventDate></div>
+    <!-- Aplicamos *ngIf para asegurarnos de que activeDay está definido -->
+    <div class="right" *ngIf="activeDay">
+      <div class="today-date">
+        <div class="event-day">
+          {{ activeDayName }}
+        </div>
+        <div class="event-date">
+          {{ activeDay.date }} {{ months[activeDay.month] }} {{ activeDay.year }}
+        </div>
+      </div>
+      <div class="events">
+        <div *ngIf="activeDay.events.length === 0" class="no-event">
+          <h3>No hay eventos</h3>
+        </div>
+        <div *ngFor="let event of activeDay.events" class="event">
+          <div class="title">
+            <h3>{{ event.title }}</h3>
+          </div>
+          <div class="description">{{ event.description }}</div>
+          <div class="time">
+            {{ formatTime(event.timeFrom) }} - {{ formatTime(event.timeTo) }}
+          </div>
+          <div class="park">Parque: {{ event.park }}</div>
+          <div class="event-buttons">
+            <button class="icon-button edit" (click)="editEvent(event)">
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+            <button class="icon-button delete" (click)="deleteEvent(event)">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+          <button class="circular-button" (click)="loadMap()">Ir</button>
+        </div>
+      </div>
     </div>
-    <div class="events" #eventsContainer></div>
-
-    <div class="add-event-wrapper" #addEventWrapper>
+    <div class="add-event-wrapper" [class.active]="isAddEventActive">
       <div class="add-event-header">
-        <div class="title">Agregar evento</div>
-        <i class="bi bi-x-lg close" #addEventCloseBtn></i>
+        <div class="title">{{ editingEventId ? 'Editar evento' : 'Agregar evento' }}</div>
+        <i class="bi bi-x-lg close" (click)="toggleAddEvent()"></i>
       </div>
       <div class="add-event-body">
-        <div class="add-event-input">
-          <input type="text" placeholder="Event Name" class="event-name" #addEventTitle />
-        </div>
-        <div class="add-event-input">
-          <input type="text" placeholder="Event Time From" class="event-time-from" #addEventFrom />
-        </div>
-        <div class="add-event-input">
-          <input type="text" placeholder="Event Time To" class="event-time-to" #addEventTo />
-        </div>
-        <!-- Nuevo campo para el nombre del parque, debajo de "Event Time To" -->
-        <div class="add-event-input">
-          <input type="text" placeholder="Park Name" class="event-park" #addEventPark />
-        </div>
-      </div>
-      <div class="add-event-footer">
-        <button class="add-event-btn" #addEventSubmit>Add Event</button>
+        <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+          <div class="add-event-input">
+            <input
+              type="text"
+              placeholder="Nombre del evento"
+              class="event-name"
+              formControlName="title"
+            />
+            <div *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched" class="error">
+              El título es obligatorio.
+            </div>
+          </div>
+          <div class="add-event-input">
+            <input
+              type="text"
+              placeholder="Descripción del evento"
+              class="event-description"
+              formControlName="description"
+            />
+          </div>
+          <div class="add-event-input">
+            <input
+              type="time"
+              placeholder="Hora de inicio"
+              class="event-time-from"
+              formControlName="timeFrom"
+            />
+            <div *ngIf="eventForm.get('timeFrom')?.invalid && eventForm.get('timeFrom')?.touched" class="error">
+              La hora de inicio es obligatoria.
+            </div>
+          </div>
+          <div class="add-event-input">
+            <input
+              type="time"
+              placeholder="Hora de fin"
+              class="event-time-to"
+              formControlName="timeTo"
+            />
+            <div *ngIf="eventForm.get('timeTo')?.invalid && eventForm.get('timeTo')?.touched" class="error">
+              La hora de fin es obligatoria.
+            </div>
+          </div>
+          <div class="add-event-input">
+            <input
+              type="text"
+              placeholder="Nombre del parque"
+              class="event-park"
+              formControlName="park"
+            />
+            <div *ngIf="eventForm.get('park')?.invalid && eventForm.get('park')?.touched" class="error">
+              El nombre del parque es obligatorio.
+            </div>
+          </div>
+          <div class="add-event-footer">
+            <button type="submit" class="add-event-btn">
+              {{ editingEventId ? 'Actualizar Evento' : 'Guardar Evento' }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+    <button class="add-event" (click)="toggleAddEvent()">
+      <i class="bi bi-calendar-event"></i>
+    </button>
   </div>
-  <button class="add-event" #addEventBtn>
-    <i class="bi bi-calendar-event"></i>
-  </button>
 </div>
