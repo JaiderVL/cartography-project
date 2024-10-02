@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+
+  
   constructor(private auth: Auth, private firestore: Firestore) {} // Añade Firestore aquí
 
   // Observable que emite el estado de autenticación
