@@ -1,15 +1,23 @@
-<div *ngIf="role === 'super_usuario'">
-  <!-- Contenido exclusivo para super_usuario -->
-  <h1>Bienvenido, Super Usuario</h1>
-  <p>Aquí va contenido especial para los super usuarios.</p>
+<div *ngIf="role === 'administrador'">
+  <h2>Bienvenido, Administrador</h2>
+  <p>Tienes acceso a todas las funcionalidades.</p>
+  
+  <app-admin-page></app-admin-page>
 </div>
 
-<div *ngIf="role === 'usuario_normal'">
-  <!-- Contenido exclusivo para usuario_normal -->
-  <h1>Bienvenido, Usuario Normal</h1>
-  <p>Este es el contenido para un usuario normal.</p>
+<div *ngIf="role === 'moderador'">
+  <h2>Bienvenido, Moderador</h2>
+  <p>Puedes anunciar actividades deportivas.</p>
 </div>
 
-<!-- Opción para cerrar sesión -->
+<div *ngIf="role === 'usuario-regular'">
+  <h2>Bienvenido, Usuario Regular</h2>
+  <p>Puedes agendar y marcar lugares favoritos.</p>
+</div>
+
+<div *ngIf="role === 'usuario-invitado'">
+  <h2>Bienvenido a nuestra Página</h2>
+  <p>Por favor, inicia sesión para más funcionalidades.</p>
+</div>
+
 <button (click)="logout()">Cerrar sesión</button>
-

@@ -1,0 +1,24 @@
+<h1>Administración de Usuarios</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Rol Actual</th>
+        <th>Cambiar Rol</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+        <select [(ngModel)]="selectedRole" (change)="changeUserRole(user.uid, selectedRole)">
+            <option value="usuario-regular">Usuario Regular</option>
+            <option value="moderador">Moderador</option>
+            <option value="administrador">Administrador</option>
+        </select>
+        </td>
+    </tr>
+    </tbody>
+</table>
