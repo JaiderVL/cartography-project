@@ -29,7 +29,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showMap = event.url !== '/map';
+        this.showMap = event.url == '/main';
       }
     });
   }
