@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
       if (user) {
         this.router.navigate(['/home']);
       } else {
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/guest']);
       }
     });
   }
