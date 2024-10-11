@@ -27,7 +27,7 @@ export class AdminPageComponent implements OnInit {
   async loadUsers() {
     const usersCollection = collection(this.firestore, 'users');
     const snapshot = await getDocs(usersCollection);
-    this.users = snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() }));
+    this.users = snapshot.docs.map((doc: { id: any; data: () => any; }) => ({ uid: doc.id, ...doc.data() }));
   }
 
   // Cambiar el rol de un usuario

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 import { Auth, authState, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -20,6 +20,13 @@ export class AuthService {
   isAuthenticated$: Observable<boolean> = authState(this.auth).pipe(
     map((user) => !!user)
   );
+
+  // Método para verificar si el usuario está autenticado
+  isAuthenticated(): Observable<boolean> {
+    return this.user$.pipe(
+      map(user => !!user) // Retorna true si el usuario está autenticado, false si no
+    );
+  }
 
   // Método para obtener el rol del usuario actual
   async getCurrentUserRole(): Promise<string | null> {

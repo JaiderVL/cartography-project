@@ -17,7 +17,16 @@ interface SideNavToggle {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent, BodyComponent, MainComponent, CommonModule, MapComponent, RegisterPageComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    SidebarComponent,
+    BodyComponent,
+    MainComponent,
+    CommonModule,
+    MapComponent,
+    RegisterPageComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -27,6 +36,7 @@ export class AppComponent implements OnInit {
   isSideNavCollapsed = false;
   screenWidth = 0;
   showMap = true;
+  isLoading = true; // Controla el estado de carga
 
   constructor(private router: Router, private authService: AuthService) {
     // Suscribirse a los eventos de navegación para mostrar u ocultar el mapa
@@ -38,28 +48,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Suscribirse al estado del usuario
-    this.authService.user$.subscribe(async (user) => {
-      if (user) {
-        // Si hay un usuario autenticado, obtener su rol
-        const role = await this.authService.getCurrentUserRole();
+    // Mostrar la pantalla de carga mientras se verifica la autenticación
+    this.isLoading = true;
 
-        // Redirigir basado en el rol
-        switch (role) {
-          case 'administrador':
-            this.router.navigate(['/home']);
-            break;
-          case 'usuario-regular':
-          case 'moderador':
-            this.router.navigate(['/home']);
-            break;
-          default:
-            this.router.navigate(['/guest']);
-            break;
-        }
+    // Suscribirse al estado del usuario
+    this.authService.user$.subscribe(user => {
+      this.isLoading = false; // Oculta la pantalla de carga cuando termina la verificación
+
+      if (user) {
+        this.router.navigate(['/home']);
       } else {
-        // Si no hay usuario autenticado, redirigir a la página de invitados
-        this.router.navigate(['/guest']);
+        this.router.navigate(['/auth/login']);
       }
     });
   }

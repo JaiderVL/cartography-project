@@ -12,14 +12,19 @@ import { GuestPageComponent } from './pages/guest-page/guest-page.component';
 
 const routes: Routes = [
   {
+    path: 'guest',
+    component: GuestPageComponent,
+    canActivate: [NoAuthGuard]
+  }, 
+  {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [NoAuthGuard] // Solo usuario-invitado puede acceder
+    //canActivate: [NoAuthGuard] // Solo usuario-invitado puede acceder
   },
   {
     path: 'register',
     component: RegisterPageComponent,
-    // canActivate: [NoAuthGuard] // Solo usuario-invitado puede acceder
+    //canActivate: [NoAuthGuard] // Solo usuario-invitado puede acceder
   },
   {
     path: 'home',
@@ -31,18 +36,15 @@ const routes: Routes = [
     component: AdminPageComponent, // Cambia a tu componente de administración
     canActivate: [AdminGuard] // Solo administrador puede acceder
   },
-  {
-    path: 'guest',
-    component: GuestPageComponent,
-    canActivate: [NoAuthGuard]
-  },
+
   {
     path: '**',
     redirectTo: 'guest'
   }
 ];
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

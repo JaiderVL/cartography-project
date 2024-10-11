@@ -1,4 +1,15 @@
-<router-outlet></router-outlet>
+<div *ngIf="isLoading" class="loading-screen">
+    <p>Verificando autenticación...</p>
+  </div>
+  
+  <!-- El resto del contenido de la aplicación -->
+  <div *ngIf="!isLoading">
+    <router-outlet></router-outlet>
+  </div>
+  
+
+
+<!-- <router-outlet></router-outlet> -->
 
 
 <!-- <div class="wrapper">
