@@ -7,8 +7,7 @@ import { HeaderComponent } from "./layout/header/header.component";
 import { MainComponent } from './pages/main/main.component';
 import { MapComponent } from './pages/map/map.component';
 import { RegisterPageComponent } from "./auth/pages/register-page/register-page.component";
-import { AuthService } from './auth/services/auth.service'; // Importa el AuthService
-
+import { AuthService } from '../../src/app/core/services/auth.service';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -58,7 +57,7 @@ export class AppComponent implements OnInit {
       if (user) {
         this.router.navigate(['/home']);
       } else {
-        this.router.navigate(['/auth/guest']);
+        this.router.navigate(['/home']);
       }
     });
   }

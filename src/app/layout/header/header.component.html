@@ -1,5 +1,17 @@
-<div class="items">
-    <button class="nav-btn register-btn">Ingresar / Registrarse</button>
-    <button class="nav-btn icon-btn bell-icon"><i class="bi bi-bell-fill"></i></button>
-    <button class="nav-btn icon-btn user-icon"><i class="bi bi-person-circle"></i></button>
-</div>
+<header>
+  <div class="logo">PARQUE VIVO</div> 
+  <div class="items">
+    <!-- Mostrar el botón solo si el usuario no está autenticado -->
+    <button class="nav-btn register-btn" *ngIf="!isAuthenticated" routerLink="/auth/login">Ingresar / Registrarse</button>
+    
+    <!-- Mostrar estos iconos solo si el usuario está autenticado -->
+    <ng-container *ngIf="isAuthenticated">
+      <button class="nav-btn icon-btn bell-icon"><i class="bi bi-bell-fill"></i></button>
+      <button class="nav-btn icon-btn user-icon"><i class="bi bi-person-circle"></i></button>
+      <button class="nav-btn" (click)="logout()">Cerrar sesión</button>
+    </ng-container>
+  </div>
+</header>
+
+
+  

@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';import { Router } from '@angular/router';
 import { AdminPageComponent } from '../admin-page/admin-page.component';
+import { HeaderComponent } from "../../layout/header/header.component";
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
-    CommonModule,AdminPageComponent
-  ],
+    CommonModule, AdminPageComponent,
+    HeaderComponent
+],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
@@ -33,7 +34,7 @@ export class HomePageComponent implements OnInit {
     this.authService.logout()
       .then(() => {
         this.role = 'usuario-invitado'; // Cambiar el rol a 'usuario-invitado' al cerrar sesión
-        this.router.navigate(['/guest']);
+        this.router.navigate(['/home']);
       })
       .catch((error) => console.error('Logout error:', error));
   }

@@ -1,16 +1,16 @@
-<div *ngIf="isLoading" class="loading-screen">
+
+ <div *ngIf="isLoading" class="loading-screen">
     <p>Verificando autenticación...</p>
   </div>
-  
+
   <!-- El resto del contenido de la aplicación -->
-  <div *ngIf="!isLoading">
+   <div *ngIf="!isLoading">
     <router-outlet></router-outlet>
   </div>
-  
+ 
 
 
 <!-- <router-outlet></router-outlet> -->
-
 
 <!-- <div class="wrapper">
     <header class="right-section">
@@ -27,4 +27,4 @@
             <router-outlet></router-outlet>
         </div>
     </div>
-</div> -->
+</div>  -->

@@ -1,8 +1,18 @@
+
+<div>
+<app-header></app-header>
+</div>
+
+<div *ngIf="role === 'usuario-invitado'">
+  <h2>Bienvenido a nuestra Página</h2>
+  <p>Por favor, inicia sesión para más funcionalidades.</p>
+</div>
+
 <div *ngIf="role === 'administrador'">
   <h2>Bienvenido, Administrador</h2>
   <p>Tienes acceso a todas las funcionalidades.</p>
-  
   <app-admin-page></app-admin-page>
+
 </div>
 
 <div *ngIf="role === 'moderador'">
@@ -15,9 +25,6 @@
   <p>Puedes agendar y marcar lugares favoritos.</p>
 </div>
 
-<div *ngIf="role === 'usuario-invitado'">
-  <h2>Bienvenido a nuestra Página</h2>
-  <p>Por favor, inicia sesión para más funcionalidades.</p>
-</div>
 
-<button (click)="logout()">Cerrar sesión</button>
+
+<!-- <button (click)="logout()">Cerrar sesión</button> -->

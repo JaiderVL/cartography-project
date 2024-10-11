@@ -1,37 +1,19 @@
-import { Routes } from "@angular/router";
-
-import { HomePageComponent } from "./auth/pages/home-page/home-page.component";
-import { AuthGuard } from './auth/guards/auth.guard';
+import { Routes } from '@angular/router';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 export const routes: Routes = [
-
   {
-    path: 'auth',
-    // guards
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-  },
-  {
-    path: 'dashboard',
-    // guards
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-  },
-  {
-    path: 'home', // Nueva ruta para la página de inicio
+    path: 'home',
     component: HomePageComponent,
-    canActivate: [AuthGuard],
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full' // Redirige automáticamente a 'home' si la ruta está vacía
   },
   {
     path: '**',
-    redirectTo: 'guest',
-  },
-  
-  ];
+    redirectTo: 'home' // Redirige a 'home' si la ruta no es válida
+  }
+];
 
-  
-    // {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-    // {path: 'main', component: MainComponent},
-    // {path: 'map', component: MapComponent},
-    // {path: 'activities', component: ActivitiesComponent},
-    // {path: 'saved-places', component: SavedPlacesComponent},
-    // {path: 'settings', component: SettingsComponent},
-    // {path: 'user-manager', component: UserManagerComponent},
