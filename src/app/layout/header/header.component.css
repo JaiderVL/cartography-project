@@ -5,31 +5,31 @@ header {
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: #4A3AFF; /* Cambia el color de fondo */
+    background-color: #4A3AFF;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     color: white;
     z-index: 1000;
-}
-
-/* Logo a la izquierda */
-.logo {
+  }
+  
+  /* Logo a la izquierda */
+  .logo {
     font-size: 24px;
     font-weight: bold;
     font-weight: 600;
-}
-
-/* Mantener los items alineados a la derecha */
-.items {
+  }
+  
+  /* Mantener los items alineados a la derecha */
+  .items {
     display: flex;
     align-items: center;
     margin-left: auto;
-}
-
-/* Botones de navegación */
-.nav-btn {
+  }
+  
+  /* Botones de navegación */
+  .nav-btn {
     color: white;
     border: none;
     padding: 10px 20px;
@@ -37,18 +37,18 @@ header {
     cursor: pointer;
     font-size: 16px;
     margin-left: 10px;
-}
-
-/* Botón de "Ingresar / Registrarse" */
-.register-btn {
+  }
+  
+  /* Botón de "Ingresar / Registrarse" */
+  .register-btn {
     border-radius: 20px;
     background-color: white;
     color: #4A3AFF;
     font-weight: 400;
-}
-
-/* Botones de iconos (campana, usuario) */
-.icon-btn {
+  }
+  
+  /* Botones de iconos (campana, usuario) */
+  .icon-btn {
     background-color: white;
     color: #4A3AFF;
     width: 40px;
@@ -59,35 +59,57 @@ header {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-}
-
-.icon-btn:hover {
+  }
+  
+  .icon-btn:hover {
     background: rgba(255, 255, 255, 0.1);
-}
-
-/* Responsivo para pantallas más pequeñas */
-@media (max-width: 768px) {
+  }
+  
+  /* Responsivo para pantallas más pequeñas */
+  @media (max-width: 768px) {
     header {
-        height: 60px;
-        padding: 0 10px;
+      height: 60px;
+      padding: 0 10px;
     }
-
+  
     .nav-btn {
-        padding: 8px 16px;
-        font-size: 14px;
+      padding: 8px 16px;
+      font-size: 14px;
     }
-
+  
     .icon-btn {
-        width: 35px;
-        height: 35px;
+      width: 35px;
+      height: 35px;
     }
-
+  
     .logo {
-        font-size: 20px;
+      font-size: 20px;
     }
-}
-
-/* Para evitar que el contenido se solape con el header */
-body {
+  }
+  
+  /* Para evitar que el contenido se solape con el header */
+  body {
     margin-top: 80px; /* Aseguramos que el contenido comience después del header */
-}
+  }
+  
+  /* Para pantallas más pequeñas que 480px (móviles) */
+  @media (max-width: 480px) {
+    header {
+      height: 50px;
+    }
+  
+    .logo {
+      font-size: 18px;
+    }
+  
+    .nav-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  

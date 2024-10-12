@@ -1,18 +1,70 @@
+/* Aseguramos que el contenido comience después del header */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
 .home-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
   text-align: center;
+  padding-top: 100px; /* Espacio suficiente para que no se superponga con el header */
 }
 
-.home-container h1 {
-  font-size: 2.5rem;
+/* Para pantallas grandes */
+.home-container h2 {
+  font-size: 2rem;
   margin-bottom: 20px;
-  color: #4070f4; /* Ajusta el color como prefieras */
+  color: #4070f4;
 }
 
 .home-container p {
   font-size: 1.2rem;
+  margin-bottom: 20px;
 }
+
+/* Para pantallas medianas */
+@media (max-width: 992px) {
+  .home-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .home-container p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  .home-container {
+    padding-top: 80px;
+  }
+
+  .home-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .home-container p {
+    font-size: 1rem;
+  }
+}
+
+/* Para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+  .home-container {
+    padding-top: 60px;
+  }
+
+  .home-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .home-container p {
+    font-size: 0.9rem;
+  }
+}
+

@@ -1,3 +1,4 @@
+/* Estilos base */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -5,12 +6,53 @@ table {
 }
 
 thead {
-  background-color: #f1f1f1;
+  background-color: #868686;
 }
 
 th, td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #868686;
 }
 
+select {
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #868686;
+}
+
+/* Contenedor que agrega desplazamiento horizontal para pantallas pequeñas */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-responsive table {
+  min-width: 600px; /* Establece un ancho mínimo para que la tabla no se haga muy pequeña */
+}
+
+@media (max-width: 768px) {
+  th, td {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  select {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  th, td {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  select {
+    font-size: 12px;
+    padding: 5px;
+  }
+}

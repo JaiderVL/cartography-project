@@ -19,15 +19,11 @@ export class HomePageComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    // Verificar si hay un usuario logueado y obtener su rol
-    this.authService.getCurrentUserRole()
-      .then((role: string | null) => {
-        this.role = role || 'usuario-invitado'; // Si no hay rol, es 'usuario-invitado'
-      })
-      .catch(error => {
-        console.error('Error al obtener el rol del usuario:', error);
-      });
+   ngOnInit() {
+    // Suscribirse al rol del usuario
+    this.authService.userRole$.subscribe(role => {
+      this.role = role;
+    });
   }
 
   logout() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'; 
 import { Auth, authState, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,10 +10,24 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   // Observable que emite el estado del usuario autenticado
   user$: Observable<User | null>;
+  // Añadimos un BehaviorSubject para el estado del rol del usuario
+  private userRoleSubject = new BehaviorSubject<string>('usuario-invitado');
+  userRole$ = this.userRoleSubject.asObservable(); // Observable que pueden usar otros componentes
 
   constructor(private auth: Auth, private firestore: Firestore) {
     // Inicializa el observable del estado del usuario autenticado
     this.user$ = authState(this.auth);
+
+    // Actualizar el rol cuando el estado de autenticación cambia
+    this.user$.subscribe(user => {
+      if (user) {
+        this.getCurrentUserRole().then(role => {
+          this.userRoleSubject.next(role!); // Emitir el rol actual
+        });
+      } else {
+        this.userRoleSubject.next('usuario-invitado'); // Si no hay usuario, es "usuario-invitado"
+      }
+    });
   }
 
   // Observable que emite si el usuario está autenticado o no
@@ -54,6 +68,7 @@ export class AuthService {
       role: 'usuario-regular' // Rol por defecto al registrarse
     });
 
+    this.userRoleSubject.next('usuario-regular'); // Emitir el nuevo rol después de registrarse
     return userCredential;
   }
 
@@ -67,6 +82,7 @@ export class AuthService {
 
     if (userDoc.exists()) {
       const userData = userDoc.data();
+      this.userRoleSubject.next(userData!['role']); // Emitir el rol cuando el usuario inicia sesión
       return { ...userCredential, role: userData['role'] }; // Retorna el rol junto con el userCredential
     }
 
@@ -75,7 +91,9 @@ export class AuthService {
 
   // Método para cerrar sesión
   logout() {
-    return signOut(this.auth);
+    return signOut(this.auth).then(() => {
+      this.userRoleSubject.next('usuario-invitado'); // Emitir "usuario-invitado" al hacer logout
+    });
   }
 
   // Método para iniciar sesión con Google
@@ -96,6 +114,7 @@ export class AuthService {
     }
 
     // Si existe, devolver el rol
+    this.userRoleSubject.next('usuario-regular'); // Emitir el rol si se registra como usuario-regular
     return { ...userCredential, role: userDoc.exists() ? userDoc.data()!['role'] : 'usuario-regular' };
   }
 
@@ -103,5 +122,6 @@ export class AuthService {
   async updateUserRole(uid: string, newRole: string): Promise<void> {
     const userRef = doc(this.firestore, `users/${uid}`);
     await setDoc(userRef, { role: newRole }, { merge: true }); // Actualiza solo el campo de rol
+    this.userRoleSubject.next(newRole); // Emitir el nuevo rol actualizado
   }
 }

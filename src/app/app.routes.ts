@@ -7,6 +7,10 @@ export const routes: Routes = [
     component: HomePageComponent,
   },
   {
+    path: 'auth',  // Esta es la ruta que carga el módulo de autenticación
+    loadChildren: () => import('./auth/auth-routing.module').then(m => m.AuthRoutingModule),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full' // Redirige automáticamente a 'home' si la ruta está vacía
@@ -16,4 +20,3 @@ export const routes: Routes = [
     redirectTo: 'home' // Redirige a 'home' si la ruta no es válida
   }
 ];
-

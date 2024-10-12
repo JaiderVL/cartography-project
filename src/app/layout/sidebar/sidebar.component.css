@@ -1,9 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Sidebar básico alineado a la izquierda */
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem;
+  height: 100vh;
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+.sidenav.collapsed {
+  width: 5rem;
+}
+
+/* Contenedor del logo */
 .logo-container {
   display: flex;
   align-items: center;
-  padding: 0.938rem 0.938rem 0 0.938rem;
+  padding: 0.938rem;
   width: 100%;
 }
 
@@ -28,13 +48,11 @@
   color: #fff;
 }
 
+/* Navegación del sidebar */
 .sidenav-nav {
   list-style: none;
   padding: 0.938rem;
   margin: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   width: 100%;
 }
 
@@ -71,22 +89,22 @@
   color: #000;
 }
 
-.active{
+.active {
   background-color: #fff;
-  .sidenav-link-icon,
-  .sidenav-link-text{
-    
-    color: black;
-  }
 }
 
+.active .sidenav-link-icon,
+.active .sidenav-link-text {
+  color: black;
+}
+
+/* Logout container */
 .logout-container {
   display: flex;
   align-items: center;
-  padding: 0.938rem 0.938rem 0 0.938rem;
+  padding: 0.938rem;
   width: 100%;
-  position: absolute;
-  bottom: 1.5rem; /* Ajuste para subir el botón desde la parte inferior */
+  margin-bottom: 1rem;
 }
 
 .logout-button {
@@ -95,11 +113,10 @@
   width: 3rem;
   height: 3rem;
   min-width: 3rem;
-  border-radius: 0.313rem;
+  border-radius: 50%;
   padding: 0.313rem;
   font-size: 24px;
   font-weight: 900;
-  border-radius: 50%;
   cursor: pointer;
   border: none;
 }
@@ -112,10 +129,11 @@
   color: #ff6159;
 }
 
-/* Estilos específicos para dispositivos móviles */
-@media (max-width: 600px) {
+/* Responsive para dispositivos móviles */
+@media (max-width: 768px) {
   .sidenav {
-    top: auto;
+    position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
     height: 5rem;
@@ -123,6 +141,7 @@
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
+    z-index: 1000;
   }
 
   .sidenav-nav {
@@ -140,14 +159,26 @@
   .sidenav-nav-link {
     height: auto;
   }
-  
+
   .logout-container {
     position: static;
-    bottom: auto;
     padding: 0;
   }
 
   .logo-container {
     display: none; /* Ocultar el logo en dispositivos móviles si es necesario */
   }
+
+  .sidenav.collapsed {
+    width: 100%; /* Expande el ancho del sidebar para pantallas pequeñas */
+  }
+}
+
+/* Evita que el contenido se solape con el sidebar */
+body {
+  margin-left: 16rem;
+}
+
+body.collapsed {
+  margin-left: 5rem;
 }

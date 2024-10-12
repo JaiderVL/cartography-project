@@ -13,7 +13,7 @@
         </div>
 
         <div class="field input-field">
-        <input type="email" formControlName="email" placeholder="Email" class="input">
+        <input  type="email" formControlName="email" placeholder="Email" class="input">
         <!-- Mensaje de error si el email no es válido -->
           <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
             <p style="color: red;">Please enter a valid email address.</p>
