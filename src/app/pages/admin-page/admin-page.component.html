@@ -1,32 +1,56 @@
 <h1>Administración de Usuarios</h1>
 
-<!-- Contenedor que cambia entre tabla y tarjetas dependiendo del tamaño de la pantalla -->
-<div class="table-responsive">
-  <table>
+<!-- Controles de búsqueda y filtrado -->
+<div class="controls">
+  <input 
+    type="text" 
+    placeholder="Buscar por correo" 
+    [(ngModel)]="searchTerm" 
+    (input)="filterUsers()" 
+  />
+
+  <select [(ngModel)]="selectedRoleFilter" (change)="filterUsers()">
+    <option value="">Todos los roles</option>
+    <option value="usuario-regular">Usuario Regular</option>
+    <option value="moderador">Moderador</option>
+    <option value="administrador">Administrador</option>
+  </select>
+</div>
+
+<!-- Vista de tabla para pantallas grandes -->
+<div class="table-responsive" *ngIf="!isMobileView">
+  <table *ngIf="filteredUsers.length > 0">
     <thead>
       <tr>
         <th>Email</th>
         <th>Rol Actual</th>
         <th>Cambiar Rol</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users">
+      <tr *ngFor="let user of filteredUsers">
         <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
         <td>
-          <select [(ngModel)]="selectedRole" (change)="changeUserRole(user.uid, selectedRole)">
+          <select [(ngModel)]="user.role" (change)="changeUserRole(user.uid, user.role)">
             <option value="usuario-regular">Usuario Regular</option>
             <option value="moderador">Moderador</option>
             <option value="administrador">Administrador</option>
           </select>
         </td>
+        <td>
+          <button (click)="deleteUser(user.uid)">Eliminar</button>
+        </td>
       </tr>
     </tbody>
   </table>
+  <p *ngIf="filteredUsers.length === 0">No se encontraron usuarios.</p>
+</div>
 
-  <!-- Tarjetas que se muestran solo en móviles -->
-  <div class="user-card" *ngFor="let user of users">
+<!-- Vista de tarjetas para móviles -->
+<div *ngIf="isMobileView">
+  <div class="user-card" *ngFor="let user of filteredUsers">
     <div class="card-item">
       <strong>Email:</strong> {{ user.email }}
     </div>
@@ -34,12 +58,15 @@
       <strong>Rol Actual:</strong> {{ user.role }}
     </div>
     <div class="card-item">
-      <label for="role-select-{{user.uid}}">Cambiar Rol:</label>
-      <select id="role-select-{{user.uid}}" [(ngModel)]="selectedRole" (change)="changeUserRole(user.uid, selectedRole)">
+      <label for="role-select-{{ user.uid }}">Cambiar Rol:</label>
+      <select id="role-select-{{ user.uid }}" [(ngModel)]="user.role" (change)="changeUserRole(user.uid, user.role)">
         <option value="usuario-regular">Usuario Regular</option>
         <option value="moderador">Moderador</option>
         <option value="administrador">Administrador</option>
       </select>
+    </div>
+    <div class="card-item">
+      <button (click)="deleteUser(user.uid)">Eliminar</button>
     </div>
   </div>
 </div>

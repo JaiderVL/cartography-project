@@ -20,62 +20,48 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
-select {
+select, input {
   width: 100%;
   padding: 8px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  margin-top: 10px;
 }
 
-/* Contenedor para hacer la tabla desplazable en pantallas pequeñas */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   margin-top: 10px;
-  color: black;
 }
 
-.table-responsive table {
-  min-width: 600px;
-}
-
-/* Estilos para las tarjetas en móviles */
 .user-card {
-  display: none; /* Ocultar por defecto, se mostrará en móviles */
-  background-color: #fff;
-  margin: 15px 0;
+  display: none;
+  background-color: white;
+  margin: 10px 0;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-item {
   margin-bottom: 10px;
-  font-size: 16px;
 }
 
-.card-item select {
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
+button {
+  background-color: #4A3AFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* Estilos responsivos */
+button:hover {
+  background-color: #3b32cc;
+}
+
 @media (max-width: 768px) {
-  th, td {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  select {
-    font-size: 14px;
-    padding: 6px;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Ocultar la tabla y mostrar tarjetas en móviles */
   table {
     display: none;
   }
@@ -86,9 +72,5 @@ select {
 
   .card-item {
     font-size: 14px;
-  }
-
-  .card-item select {
-    font-size: 12px;
   }
 }
