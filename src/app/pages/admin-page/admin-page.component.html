@@ -1,5 +1,6 @@
 <h1>Administración de Usuarios</h1>
 
+<!-- Contenedor que cambia entre tabla y tarjetas dependiendo del tamaño de la pantalla -->
 <div class="table-responsive">
   <table>
     <thead>
@@ -23,4 +24,22 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Tarjetas que se muestran solo en móviles -->
+  <div class="user-card" *ngFor="let user of users">
+    <div class="card-item">
+      <strong>Email:</strong> {{ user.email }}
+    </div>
+    <div class="card-item">
+      <strong>Rol Actual:</strong> {{ user.role }}
+    </div>
+    <div class="card-item">
+      <label for="role-select-{{user.uid}}">Cambiar Rol:</label>
+      <select id="role-select-{{user.uid}}" [(ngModel)]="selectedRole" (change)="changeUserRole(user.uid, selectedRole)">
+        <option value="usuario-regular">Usuario Regular</option>
+        <option value="moderador">Moderador</option>
+        <option value="administrador">Administrador</option>
+      </select>
+    </div>
+  </div>
 </div>

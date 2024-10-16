@@ -3,42 +3,71 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  overflow: hidden;
+  color: black;
 }
 
 thead {
-  background-color: #868686;
+  background-color: #4A3AFF;
+  color: white;
 }
 
 th, td {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #868686;
+  border-bottom: 1px solid #ddd;
 }
 
 select {
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #868686;
+  border: 1px solid #ccc;
 }
 
-/* Contenedor que agrega desplazamiento horizontal para pantallas pequeñas */
+/* Contenedor para hacer la tabla desplazable en pantallas pequeñas */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+  margin-top: 10px;
+  color: black;
 }
 
 .table-responsive table {
-  min-width: 600px; /* Establece un ancho mínimo para que la tabla no se haga muy pequeña */
+  min-width: 600px;
 }
 
+/* Estilos para las tarjetas en móviles */
+.user-card {
+  display: none; /* Ocultar por defecto, se mostrará en móviles */
+  background-color: #fff;
+  margin: 15px 0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-item {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.card-item select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Estilos responsivos */
 @media (max-width: 768px) {
   th, td {
     font-size: 14px;
-    padding: 8px;
+    padding: 10px;
   }
-  
+
   select {
     font-size: 14px;
     padding: 6px;
@@ -46,13 +75,20 @@ select {
 }
 
 @media (max-width: 480px) {
-  th, td {
-    font-size: 12px;
-    padding: 6px;
+  /* Ocultar la tabla y mostrar tarjetas en móviles */
+  table {
+    display: none;
   }
-  
-  select {
+
+  .user-card {
+    display: block;
+  }
+
+  .card-item {
+    font-size: 14px;
+  }
+
+  .card-item select {
     font-size: 12px;
-    padding: 5px;
   }
 }

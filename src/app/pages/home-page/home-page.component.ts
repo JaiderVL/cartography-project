@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';import { Router } from '@angular/router';
 import { AdminPageComponent } from '../admin-page/admin-page.component';
 import { HeaderComponent } from "../../layout/header/header.component";
+import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
     CommonModule, AdminPageComponent,
-    HeaderComponent
+    HeaderComponent,
+    SidebarComponent
 ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
