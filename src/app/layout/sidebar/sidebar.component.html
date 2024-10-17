@@ -1,7 +1,8 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
   <div class="logo-container">
-    <button class="logo" (click)="toggleCollapse()">A</button>
-    <div class="logo-text" *ngIf="collapsed">Angular</div>
+    <button class="logo" (click)="toggleCollapse()"><i class="bi bi-layout-text-sidebar-reverse"></i>
+    </button>
+    <!-- <div class="logo-text" *ngIf="collapsed"></div> -->
   </div>
   <ul class="sidenav-nav">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
@@ -16,9 +17,4 @@
       </a>
     </li>
   </ul>
-  <!-- New logout button section -->
-  <div class="logout-container">
-    <button class="logout-button"><i class="logout-icon" class="bi bi-box-arrow-left"></i></button>
-    <div class="logout-text" *ngIf="collapsed">Salir</div>
-  </div>
 </div>

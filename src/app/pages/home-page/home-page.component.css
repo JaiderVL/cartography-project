@@ -1,21 +1,67 @@
-/* Aseguramos que el contenido comience después del header */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+/* General layout */
+.wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #4A3AFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: white;
+  z-index: 1000;
+}
+
+/* Sidebar */
+.sidenav {
+  background: linear-gradient(to bottom, rgba(52, 55, 72, 0.9), rgba(0, 0, 0, 0.9));
+  transition: all 0.5s ease;
+  position: fixed;
+  z-index: 999;
+  top: 80px; /* Ajuste: el sidebar comienza justo debajo del header */
+  left: 0;
+  width: 5rem;
+  height: calc(100vh - 80px); /* Sidebar ocupa el espacio restante debajo del header */
+}
+
+.sidenav-collapsed {
+  width: 16.5625rem;
+}
+
+/* Contenido principal */
+.content-expanded {
+  margin-left: 5rem;
+  transition: margin-left 0.3s ease;
+  flex-grow: 1;
+  margin-top: 80px; /* Ajuste para que el contenido no se superponga con el header */
+}
+
+.content-collapsed {
+  margin-left: 16.5625rem;
+  transition: margin-left 0.3s ease;
+  flex-grow: 1;
+  margin-top: 80px; /* Ajuste para que el contenido no se superponga con el header */
+}
+
+/* Home container styling */
 .home-container {
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding-top: 100px; /* Espacio suficiente para que no se superponga con el header */
 }
 
-/* Para pantallas grandes */
+/* For large screens */
 .home-container h2 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -27,7 +73,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Para pantallas medianas */
+/* Medium screens */
 @media (max-width: 992px) {
   .home-container h2 {
     font-size: 1.8rem;
@@ -38,7 +84,7 @@ body {
   }
 }
 
-/* Para pantallas pequeñas */
+/* Small screens */
 @media (max-width: 768px) {
   .home-container {
     padding-top: 80px;
@@ -53,7 +99,7 @@ body {
   }
 }
 
-/* Para pantallas muy pequeñas (móviles) */
+/* Very small screens (mobile) */
 @media (max-width: 480px) {
   .home-container {
     padding-top: 60px;
@@ -66,5 +112,34 @@ body {
   .home-container p {
     font-size: 0.9rem;
   }
-}
 
+  /* Ensure sidebar is fixed at the bottom for mobile */
+  .sidenav {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .sidenav-collapsed {
+    width: 100%;
+  }
+
+  .sidenav-nav {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .sidenav-nav-item {
+    margin-bottom: 0;
+  }
+
+  .content-expanded, .content-collapsed {
+    margin-left: 0;
+    margin-top: 60px; /* Ensure margin from the header */
+  }
+}

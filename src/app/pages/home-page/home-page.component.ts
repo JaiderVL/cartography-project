@@ -5,6 +5,10 @@ import { AdminPageComponent } from '../admin-page/admin-page.component';
 import { HeaderComponent } from "../../layout/header/header.component";
 import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
 
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
+}
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -18,14 +22,18 @@ import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
 })
 export class HomePageComponent implements OnInit { 
   role: string | null = 'usuario-invitado'; // Usuario invitado por defecto
+  isSideNavCollapsed = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-   ngOnInit() {
+  ngOnInit() {
     // Suscribirse al rol del usuario
     this.authService.userRole$.subscribe(role => {
       this.role = role;
     });
+  }
+  onToggleSideNav(data: SideNavToggle): void {
+    this.isSideNavCollapsed = data.collapsed;
   }
 
   logout() {
