@@ -11,7 +11,11 @@
 
   <!-- Contenido principal -->
   <div [ngClass]="isSideNavCollapsed ? 'content-collapsed' : 'content-expanded'">
-    <div class="home-container">
+    
+    <router-outlet></router-outlet>
+
+
+    <!-- <div class="home-container">
       <div *ngIf="role === 'usuario-invitado'">
         <h2>Bienvenido a nuestra Página</h2>
         <p>Por favor, inicia sesión para más funcionalidades.</p>
@@ -20,7 +24,7 @@
       <div *ngIf="role === 'administrador'">
         <h2>Bienvenido, Administrador</h2>
         <p>Tienes acceso a todas las funcionalidades.</p>
-        <app-admin-page></app-admin-page>
+        
       </div>
 
       <div *ngIf="role === 'moderador'">
@@ -32,6 +36,6 @@
         <h2>Bienvenido, Usuario Regular</h2>
         <p>Puedes agendar y marcar lugares favoritos.</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
