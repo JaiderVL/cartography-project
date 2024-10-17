@@ -10,7 +10,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: auto;
   background-color: #4A3AFF;
   display: flex;
   align-items: center;
@@ -26,10 +26,10 @@ header {
   transition: all 0.5s ease;
   position: fixed;
   z-index: 999;
-  top: 80px; /* Ajuste: el sidebar comienza justo debajo del header */
+  top: 60px; /* Ajuste: el sidebar comienza justo debajo del header */
   left: 0;
   width: 5rem;
-  height: calc(100vh - 80px); /* Sidebar ocupa el espacio restante debajo del header */
+  height: calc(100vh - 60px); /* Sidebar ocupa el espacio restante debajo del header */
 }
 
 .sidenav-collapsed {
@@ -41,14 +41,14 @@ header {
   margin-left: 5rem;
   transition: margin-left 0.3s ease;
   flex-grow: 1;
-  margin-top: 80px; /* Ajuste para que el contenido no se superponga con el header */
+  margin-top: 60px; /* Ajuste para que el contenido no se superponga con el header */
 }
 
 .content-collapsed {
   margin-left: 16.5625rem;
   transition: margin-left 0.3s ease;
   flex-grow: 1;
-  margin-top: 80px; /* Ajuste para que el contenido no se superponga con el header */
+  margin-top: 60px; /* Ajuste para que el contenido no se superponga con el header */
 }
 
 /* Home container styling */
@@ -59,6 +59,7 @@ header {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  padding-top: 40px;
 }
 
 /* For large screens */
@@ -87,7 +88,7 @@ header {
 /* Small screens */
 @media (max-width: 768px) {
   .home-container {
-    padding-top: 80px;
+    padding-top: 60px;
   }
 
   .home-container h2 {
