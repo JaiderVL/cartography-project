@@ -5,7 +5,8 @@ header {
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: #4A3AFF;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -45,8 +46,8 @@ header {
   /* Botón de "Ingresar / Registrarse" */
   .register-btn {
     border-radius: 20px;
-    /* background-color: white; */
-    background-color: #4A3AFF;
+    background-color: white;
+    color: #4A3AFF;
     font-weight: 400;
   }
   
