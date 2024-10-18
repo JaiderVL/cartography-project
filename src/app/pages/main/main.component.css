@@ -5,6 +5,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
+/* Estilos generales para pantallas grandes */
 .container-body-img {
   width: 30rem;
   height: auto; 
@@ -95,7 +96,6 @@
   box-shadow: 0.063rem 0 1.2rem 0 #fff;
 }
 
-
 .image-container-info img {
   width: 100%;
   height: 100%;
@@ -114,4 +114,69 @@
   text-align: justify;
   font-size: 12px;
   font-weight: 500;
+}
+
+/* --- Estilos Responsivos --- */
+/* Cuando el ancho de la pantalla es menor o igual a 768px */
+@media (max-width: 768px) {
+  /* Ajustar los anchos de los contenedores */
+  .container-body-img,
+  .container-body-info,
+  .card-info {
+    width: 100%;
+    right: auto;
+    bottom: auto;
+  }
+
+  /* Ajustar el layout de la cuadrícula de imágenes */
+  .card-body-img {
+    grid-template-columns: 1fr; /* Una columna */
+    grid-template-rows: none;
+    justify-items: center; /* Centrar los elementos en la cuadrícula */
+  }
+
+  /* Ajustar el tamaño de las imágenes en el grid */
+  .card-body-img img {
+    width: 100%;
+    max-width: 300px; /* Limitar el ancho máximo */
+    height: auto;
+    margin: 0 auto; /* Centrar la imagen */
+  }
+
+  /* Ajustar tamaños de fuente y márgenes si es necesario */
+  .card-title-img,
+  .card-title-info {
+    font-size: 16px;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .card-text-info {
+    font-size: 14px;
+  }
+
+  .visit-btn {
+    font-size: 12px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Ajustar el layout de la sección de información */
+  .grid-container-info {
+    grid-template-columns: 1fr; /* Una columna */
+  }
+
+  /* Ajustar el tamaño de la imagen principal */
+  .image-container-info {
+    max-width: 100%;
+    max-height: none;
+    margin: 0 auto; /* Centrar el contenedor de imagen */
+    text-align: center; /* Centrar el contenido dentro del contenedor */
+  }
+
+  .image-container-info img {
+    width: 100%;
+    max-width: 300px; /* Limitar el ancho máximo */
+    height: auto;
+  }
 }

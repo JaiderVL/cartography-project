@@ -1,34 +1,44 @@
-<div class="wrapper">
-  <div class="container-body container-body-info">
-    <div class="card card-info">
-      <div class="card-body card-body-info">
-        <h5 class="card-title card-title-info "><i class="bi bi-geo-alt-fill location-marker"></i>{{name}}</h5>
-        <div class="grid-container grid-container-info">
-          <p class="card-text card-text-info ">
-            {{description}}
-          </p>
-          <div class="d-flex justify-content-center">
-            <div class="image-container image-container-info">
-              <img class="img-fluid img-fluid-info" [src]="imageUrl" alt="parque{{name}}">
+<div *ngIf="isLoading" class="loading-message">
+  Cargando marcadores...
+</div>
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+<div *ngIf="!isLoading && !errorMessage">
+  <div class="wrapper">
+    <div class="container-body container-body-info">
+      <div class="card card-info">
+        <div class="card-body card-body-info">
+          <h5 class="card-title card-title-info">
+            <i class="bi bi-geo-alt-fill location-marker"></i>{{name}}
+          </h5>
+          <div class="grid-container grid-container-info">
+            <p class="card-text card-text-info">
+              {{description}}
+            </p>
+            <div class="d-flex justify-content-center">
+              <div class="image-container image-container-info">
+                <img class="img-fluid img-fluid-info" [src]="imageUrl" [alt]="name" (error)="onImageError($event)">
+              </div>
             </div>
           </div>
+          <a [routerLink]="['/map']" [queryParams]="{ markerId: currentMarkerId }" class="btn btn-primary btn-sm rounded-pill visit-btn">Visitar</a>
         </div>
-        <a [href]="link" class="btn btn-primary btn-sm rounded-pill visit-btn">Visitar</a>
       </div>
     </div>
-  </div>
-  <br>
-  <div class="container-body container-body-img">
-    <div class="card card-img">
-      <h5 class="card-title card-title-img">
-        <i class="bi bi-binoculars-fill location-img"></i> Parques
-      </h5>
-      <div class="card-body card-body-img">
-        <div class="image-container" *ngFor="let image of images">
-          <img [src]="image.src" [alt]="image.alt" (click)="loadMap(image)">
+    <br>
+    <div class="container-body container-body-img">
+      <div class="card card-img">
+        <h5 class="card-title card-title-img">
+          <i class="bi bi-binoculars-fill location-img"></i> Parques
+        </h5>
+        <div class="card-body card-body-img">
+          <div class="image-container" *ngFor="let image of images">
+            <img [src]="image.src" [alt]="image.alt" (click)="loadMap(image)" (error)="onImageError($event)">
+          </div>
         </div>
+        <a [routerLink]="['/map']" class="btn btn-primary btn-sm rounded-pill">Visitar</a>
       </div>
-      <a href="#" class="btn btn-primary btn-sm rounded-pill">Visitar</a>
     </div>
   </div>
 </div>
