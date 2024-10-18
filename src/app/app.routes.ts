@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HomePageComponent } from './home/home-page/home-page.component';
 import { MapComponent } from './pages/map/map.component';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { SavedPlacesComponent } from './pages/saved-places/saved-places.component';

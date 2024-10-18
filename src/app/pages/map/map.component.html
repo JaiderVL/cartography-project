@@ -1,1 +1,16 @@
 <div class="wrapper" id="map" #map></div>
+<div class="add-marker">
+  <button class="btn btn-primary" (click)="createMarker()">
+    + agregar marcador
+  </button>
+</div>
+<div class="edit-mode-toggle">
+  <button class="btn btn-primary" (click)="toggleEditMode()">
+    {{ isEditMode ? 'Desactivar Modo Edición' : 'Activar Modo Edición' }}
+  </button>
+</div>
+
+<div class="place-cards" *ngIf="showCards && isMapRoute">
+  <button class="close-btn" (click)="closePlaceCards()">X</button>
+  <app-place-card [markerId]="selectedMarkerId"></app-place-card>
+</div>

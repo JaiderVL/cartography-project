@@ -4,15 +4,18 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
-    background-color: #4A3AFF;
+    height: 60px;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     color: white;
     z-index: 1000;
+    
   }
+
+
   
   /* Logo a la izquierda */
   .logo {
@@ -42,14 +45,14 @@ header {
   /* Botón de "Ingresar / Registrarse" */
   .register-btn {
     border-radius: 20px;
-    background-color: white;
-    color: #4A3AFF;
+    /* background-color: white; */
+    background-color: #4A3AFF;
     font-weight: 400;
   }
   
   /* Botones de iconos (campana, usuario) */
   .icon-btn {
-    background-color: white;
+    /* background-color: white; */
     color: #4A3AFF;
     width: 40px;
     height: 40px;
@@ -89,7 +92,7 @@ header {
   
   /* Para evitar que el contenido se solape con el header */
   body {
-    margin-top: 80px; /* Aseguramos que el contenido comience después del header */
+    margin-top: 60px; /* Aseguramos que el contenido comience después del header */
   }
   
   /* Para pantallas más pequeñas que 480px (móviles) */
@@ -113,3 +116,12 @@ header {
     }
   }
   
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';import { Router, RouterModule } from '@angular/router';
-import { AdminPageComponent } from '../admin-page/admin-page.component';
+import { AdminPageComponent } from '../../pages/admin-page/admin-page.component';
 import { HeaderComponent } from "../../layout/header/header.component";
 import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
+import { MapComponent } from "../../pages/map/map.component";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -17,7 +18,8 @@ interface SideNavToggle {
     HeaderComponent,
     SidebarComponent,
     AdminPageComponent,
-    RouterModule
+    RouterModule,
+    MapComponent
 ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
