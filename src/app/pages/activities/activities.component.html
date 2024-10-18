@@ -77,7 +77,7 @@
               <i class="bi bi-trash-fill"></i>
             </button>
           </div>
-          <button class="circular-button" (click)="loadMap()">Ir</button>
+          <button class="circular-button" (click)="loadMap(event)">Ir</button>
         </div>
       </div>
     </div>
@@ -129,15 +129,18 @@
               La hora de fin es obligatoria.
             </div>
           </div>
+          <!-- Reemplazamos el input por un select para los parques -->
           <div class="add-event-input">
-            <input
-              type="text"
-              placeholder="Nombre del parque"
-              class="event-park"
-              formControlName="park"
-            />
+            <select formControlName="park" class="event-park" [disabled]="markers.length === 0">
+              <option value="" disabled selected>
+                {{ markers.length === 0 ? 'Cargando parques...' : 'Selecciona un parque' }}
+              </option>
+              <option *ngFor="let marker of markers" [value]="marker.firebaseId">
+                {{ marker.name }}
+              </option>
+            </select>
             <div *ngIf="eventForm.get('park')?.invalid && eventForm.get('park')?.touched" class="error">
-              El nombre del parque es obligatorio.
+              El parque es obligatorio.
             </div>
           </div>
           <div class="add-event-footer">

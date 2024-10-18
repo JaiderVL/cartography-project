@@ -1,3 +1,4 @@
+// event.model.ts
 export interface Event {
   id?: string;
   title: string;
@@ -10,4 +11,5 @@ export interface Event {
   description?: string;
   lng: number;
   lat: number;
+  markerId?: string; // Nuevo campo para el ID del marcador
 }

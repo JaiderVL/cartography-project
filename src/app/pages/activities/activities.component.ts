@@ -5,7 +5,9 @@ import { Event } from '../../core/models/event.model';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
+import { MarkerService } from '../../core/services/marker.service';
+import { Marker } from '../../core/models/marker.model';
 
 interface Day {
   date: number;
@@ -39,18 +41,21 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   ];
 
   days: Day[] = [];
-  activeDay!: Day; // Usamos '!' para indicar que será inicializado antes de su uso
+  activeDay!: Day;
   isAddEventActive = false;
-
-  // Constantes para latitud y longitud fijas
-  readonly FIXED_LAT = 4.347534119137196;
-  readonly FIXED_LNG = -74.36888427121782;
 
   // Formulario reactivo
   eventForm: FormGroup;
   editingEventId: string | null = null;
 
-  constructor(private eventService: EventService, private router: Router) {
+  // Lista de parques
+  markers: Marker[] = [];
+
+  constructor(
+    private eventService: EventService,
+    private router: Router,
+    private markerService: MarkerService
+  ) {
     // Inicializa el formulario reactivo
     this.eventForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -62,7 +67,12 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadEvents();
+    // Intentamos cargar los eventos desde localStorage
+    this.loadEventsFromLocalStorage();
+
+    // Cargamos los eventos desde Firebase
+    this.loadEventsFromFirebase();
+    this.loadMarkers(); // Cargamos los parques al inicializar
   }
 
   ngOnDestroy(): void {
@@ -70,12 +80,36 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  // Cargar eventos desde localStorage
+  loadEventsFromLocalStorage(): void {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      const events: Event[] = JSON.parse(storedEvents);
+      this.generateCalendar(this.month, this.year, events);
+    }
+  }
+
   // Cargar eventos desde Firebase
-  loadEvents(): void {
+  loadEventsFromFirebase(): void {
     this.eventService.getEvents()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(events => {
+        // Actualizamos el calendario con los eventos de Firebase
         this.generateCalendar(this.month, this.year, events);
+        // Actualizamos localStorage con los eventos más recientes
+        localStorage.setItem('events', JSON.stringify(events));
+      });
+  }
+
+  // Cargar parques desde Firebase
+  loadMarkers(): void {
+    this.markerService.getMarkersRealtime()
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map(markers => markers.sort((a, b) => a.name.localeCompare(b.name)))
+      )
+      .subscribe(markers => {
+        this.markers = markers;
       });
   }
 
@@ -160,7 +194,8 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     } else {
       this.month--;
     }
-    this.loadEvents();
+    // Cargamos los eventos desde localStorage para el mes cambiado
+    this.loadEventsFromLocalStorage();
   }
 
   nextMonth(): void {
@@ -170,13 +205,15 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     } else {
       this.month++;
     }
-    this.loadEvents();
+    // Cargamos los eventos desde localStorage para el mes cambiado
+    this.loadEventsFromLocalStorage();
   }
 
   goToToday(): void {
     this.month = this.today.getMonth();
     this.year = this.today.getFullYear();
-    this.loadEvents();
+    // Cargamos los eventos desde localStorage para el mes actual
+    this.loadEventsFromLocalStorage();
     this.activeDay = this.days.find(day => day.isToday) as Day;
   }
 
@@ -210,6 +247,38 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     this.editingEventId = null;
   }
 
+  // Agregar un evento al localStorage
+  addLocalStorageEvent(event: Event): void {
+    const storedEvents = localStorage.getItem('events');
+    const events: Event[] = storedEvents ? JSON.parse(storedEvents) : [];
+    event.id = event.id || Date.now().toString();
+    events.push(event);
+    localStorage.setItem('events', JSON.stringify(events));
+  }
+
+  // Actualizar un evento en localStorage
+  updateLocalStorageEvent(updatedEvent: Event): void {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      const events: Event[] = JSON.parse(storedEvents);
+      const index = events.findIndex(event => event.id === updatedEvent.id);
+      if (index !== -1) {
+        events[index] = updatedEvent;
+        localStorage.setItem('events', JSON.stringify(events));
+      }
+    }
+  }
+
+  // Eliminar un evento de localStorage
+  deleteLocalStorageEvent(eventId: string): void {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      let events: Event[] = JSON.parse(storedEvents);
+      events = events.filter(event => event.id !== eventId);
+      localStorage.setItem('events', JSON.stringify(events));
+    }
+  }
+
   addEvent(): void {
     if (this.eventForm.invalid) {
       alert('Por favor llena todos los campos obligatorios');
@@ -221,25 +290,40 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Obtenemos el parque seleccionado
+    const selectedParkId = this.eventForm.get('park')?.value;
+    const selectedPark = this.markers.find(marker => marker.firebaseId === selectedParkId);
+
+    if (!selectedPark) {
+      alert('Parque seleccionado no válido.');
+      return;
+    }
+
     const newEvent: Event = {
       ...this.eventForm.value,
       date: this.activeDay.date,
       month: this.activeDay.month,
       year: this.activeDay.year,
-      lat: this.FIXED_LAT,
-      lng: this.FIXED_LNG,
+      lat: selectedPark.lat,
+      lng: selectedPark.lng,
+      park: selectedPark.name,
+      markerId: selectedPark.firebaseId, // Almacena el ID del marcador
     };
 
     if (this.editingEventId) {
-      // Actualizar evento existente
-      this.eventService.updateEvent({ ...newEvent, id: this.editingEventId }).subscribe(() => {
-        this.loadEvents();
+      // Actualizar evento existente en Firebase
+      this.eventService.updateEvent({ ...newEvent, id: this.editingEventId}).subscribe(() => {
+        // Actualizamos localStorage
+        this.updateLocalStorageEvent({ ...newEvent, id: this.editingEventId ?? undefined });
+        this.loadEventsFromLocalStorage();
         this.toggleAddEvent();
       });
     } else {
-      // Agregar nuevo evento
+      // Agregar nuevo evento a Firebase
       this.eventService.addEvent(newEvent).subscribe(() => {
-        this.loadEvents();
+        // Agregamos el evento al localStorage
+        this.addLocalStorageEvent(newEvent);
+        this.loadEventsFromLocalStorage();
         this.toggleAddEvent();
       });
     }
@@ -250,7 +334,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar el evento "${event.title}"?`);
       if (confirmDelete) {
         this.eventService.deleteEvent(event.id).subscribe(() => {
-          this.loadEvents();
+          // Eliminamos el evento de localStorage
+          this.deleteLocalStorageEvent(event.id!);
+          this.loadEventsFromLocalStorage();
         });
       }
     } else {
@@ -261,12 +347,16 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   editEvent(event: Event): void {
     if (event.id) {
       this.isAddEventActive = true;
+
+      // Buscamos el parque correspondiente en la lista de markers
+      const selectedPark = this.markers.find(marker => marker.name === event.park);
+
       this.eventForm.patchValue({
         title: event.title,
         description: event.description || '',
         timeFrom: event.timeFrom,
         timeTo: event.timeTo,
-        park: event.park,
+        park: selectedPark ? selectedPark.firebaseId : '',
       });
       this.editingEventId = event.id;
     } else {
@@ -281,7 +371,8 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       if (monthInput > 0 && monthInput < 13 && yearInput.toString().length === 4) {
         this.month = monthInput - 1;
         this.year = yearInput;
-        this.loadEvents();
+        // Cargamos los eventos desde localStorage para la fecha seleccionada
+        this.loadEventsFromLocalStorage();
         return;
       }
     }
@@ -317,7 +408,11 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  loadMap(): void {
-    this.router.navigate(['/map'], { queryParams: { lng: this.FIXED_LNG, lat: this.FIXED_LAT } });
-  }
+  loadMap(event: Event): void {
+    if (event.markerId) {
+      this.router.navigate(['/map'], { queryParams: { markerId: event.markerId } });
+    } else {
+      alert('Este evento no tiene un marcador asociado.');
+    }
+  }  
 }

@@ -1,10 +1,10 @@
+import mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LngLat, Map, Marker } from 'mapbox-gl';
 import { MarkerService } from '../../core/services/marker.service';
 import { environment } from '../../../environments/environments';
-import mapboxgl from 'mapbox-gl';
 import { PlaceCardComponent } from "./place-card/place-card.component";
 import { Marker as MarkerModel } from '../../core/models/marker.model';
 import { Subscription } from 'rxjs';
@@ -15,10 +15,10 @@ interface MarkerAndColor {
   id: number;
   color: string;
   marker: Marker;
-  name: string; 
-  description: string; 
-  coverImage: string; 
-  images: string[]; 
+  name: string;
+  description: string;
+  coverImage: string;
+  images: string[];
   firebaseId?: string;
   dragListener?: () => void;
 }
@@ -30,16 +30,16 @@ interface MarkerAndColor {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnDestroy {
+export class MapComponent implements OnInit, OnDestroy {
   @ViewChild('map') divMap!: ElementRef;
 
   public showCards = false;
   public isMapRoute = false;
   public selectedMarkerInfo: any = null;
-  public selectedMarkerName: string = ''; 
-  public selectedMarkerDescription: string = ''; 
-  public selectedMarkerCoverImage: string = ''; 
-  public selectedMarkerImages: string[] = []; 
+  public selectedMarkerName: string = '';
+  public selectedMarkerDescription: string = '';
+  public selectedMarkerCoverImage: string = '';
+  public selectedMarkerImages: string[] = [];
 
   public markers: MarkerAndColor[] = [];
   public markerId: number = 0;
@@ -49,9 +49,15 @@ export class MapComponent implements OnDestroy {
   public currentPosition: LngLat = new LngLat(-74.3740312, 4.3391638);
   private markersSubscription!: Subscription;
 
-  public isEditMode: boolean = false; 
+  public isEditMode: boolean = false;
 
   public selectedMarkerId: string = '';
+
+  // Variables para manejar el markerId de los query params
+  private markerIdFromParams: string | null = null;
+  private queryParamsProcessed: boolean = false;
+  private displayAllMarkers: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -59,7 +65,21 @@ export class MapComponent implements OnDestroy {
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isMapRoute = event.url === '/map';
+        // Ajuste en la condición para considerar parámetros de consulta
+        this.isMapRoute = event.url.startsWith('/map');
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    // Suscribirse a los parámetros de consulta
+    this.route.queryParams.subscribe(params => {
+      this.markerIdFromParams = params['markerId'] || null;
+
+      if (this.markerIdFromParams) {
+        this.displayAllMarkers = false;
+      } else {
+        this.displayAllMarkers = true;
       }
     });
   }
@@ -86,18 +106,6 @@ export class MapComponent implements OnDestroy {
 
       // Escuchar cambios en Firestore en tiempo real
       this.listenToFirestoreChanges();
-
-      // Aseguramos que el mapa esté cargado antes de añadir marcadores
-      this.route.queryParams.subscribe(params => {
-        const lng = parseFloat(params['lng']);
-        const lat = parseFloat(params['lat']);
-
-        if (!isNaN(lng) && !isNaN(lat)) {
-          this.createMarker(new LngLat(lng, lat));
-        } else {
-          this.loadMarkersFromLocalStorage();
-        }
-      });
     });
   }
 
@@ -108,8 +116,27 @@ export class MapComponent implements OnDestroy {
       // Actualizar localStorage con los datos más recientes
       localStorage.setItem('plainMarkers', JSON.stringify(markersFromFirebase));
 
-      // Actualizar marcadores en el mapa
-      this.updateMapMarkers(markersFromFirebase);
+      if (this.displayAllMarkers) {
+        // Si se deben mostrar todos los marcadores
+        this.updateMapMarkers(markersFromFirebase);
+
+        // Si hay un markerId y no se ha procesado, resaltar el marcador
+        if (this.markerIdFromParams && !this.queryParamsProcessed) {
+          this.highlightMarkerById(this.markerIdFromParams);
+          this.queryParamsProcessed = true;
+        }
+      } else {
+        // Si solo se debe mostrar un marcador específico
+        const markerToDisplay = markersFromFirebase.find(marker => marker.firebaseId === this.markerIdFromParams);
+        if (markerToDisplay) {
+          // Actualizar marcadores con solo el marcador seleccionado
+          this.updateMapMarkers([markerToDisplay]);
+          this.highlightMarkerById(this.markerIdFromParams!);
+        } else {
+          console.warn('No se encontró el marcador especificado.');
+        }
+        this.queryParamsProcessed = true;
+      }
     });
   }
 
@@ -123,7 +150,7 @@ export class MapComponent implements OnDestroy {
   toggleEditMode() {
     this.isEditMode = !this.isEditMode;
     console.log(`Modo de edición: ${this.isEditMode ? 'Activado' : 'Desactivado'}`);
-    
+
     // Actualizar todos los marcadores para que sean arrastrables o no según el modo de edición
     this.markers.forEach((markerObj) => {
       markerObj.marker.setDraggable(this.isEditMode);
@@ -157,7 +184,7 @@ export class MapComponent implements OnDestroy {
     const position = lnglat || this.map.getCenter();
     const name = prompt('Por favor, ingresa un nombre para el nuevo marcador:');
     const description = prompt('Por favor, ingresa una descripción para el marcador:');
-    
+
     // Puedes personalizar el color en el futuro
     const color = prompt('Por favor, ingresa un color para el marcador (en formato hexadecimal):', '#ff0000') || '#ff0000';
 
@@ -210,7 +237,7 @@ export class MapComponent implements OnDestroy {
 
   onMarkerClick(markerObj: MarkerAndColor) {
     this.showCards = true;
-    this.selectedMarkerInfo = markerObj.marker.getLngLat(); 
+    this.selectedMarkerInfo = markerObj.marker.getLngLat();
     this.selectedMarkerName = markerObj.name; // Almacena el nombre del marcador seleccionado
     this.selectedMarkerDescription = markerObj.description; // Almacena la descripción del marcador seleccionado
     this.selectedMarkerCoverImage = markerObj.coverImage; // Almacena la imagen de portada
@@ -229,7 +256,7 @@ export class MapComponent implements OnDestroy {
     this.showCards = false;
     this.selectedMarkerInfo = null;
     this.selectedMarkerName = ''; // Limpia el nombre del marcador seleccionado
-    this.selectedMarkerId = ''; 
+    this.selectedMarkerId = '';
     this.selectedMarkerDescription = ''; // Limpia la descripción del marcador seleccionado
     this.selectedMarkerCoverImage = ''; // Limpia la imagen de portada seleccionada
     this.selectedMarkerImages = []; // Limpia las imágenes adicionales del marcador seleccionado
@@ -238,13 +265,19 @@ export class MapComponent implements OnDestroy {
   async saveMarkerToFirebaseAndLocalStorage(markerData: MarkerModel, marker: Marker) {
     try {
       console.log('Guardando nuevo marcador en Firebase:', markerData);
-      
+
       // Guardar el marcador y obtener el ID de Firebase
       const firebaseId = await this.markerService.addMarker(markerData);
       markerData.firebaseId = firebaseId; // Guarda el ID de Firebase en el marcador
 
+      // Actualizar el objeto markerObj con el firebaseId
+      const markerObj = this.markers.find(m => m.id === markerData.id);
+      if (markerObj) {
+        markerObj.firebaseId = firebaseId;
+      }
+
       // Añadir nuevo marcador a localStorage
-      this.addMarkerToLocalStorage(markerData); 
+      this.addMarkerToLocalStorage(markerData);
       console.log('Marcador guardado en localStorage:', markerData);
 
       // Evento para actualizar el marcador cuando se mueva
@@ -284,7 +317,7 @@ export class MapComponent implements OnDestroy {
           // Actualiza el marcador en Firebase usando el firebaseId
           console.log(`Actualizando marcador con firebaseId ${markerToUpdate.firebaseId} en Firebase`);
           await this.markerService.updateMarker(markerToUpdate.firebaseId, newLngLat.lng, newLngLat.lat);
-          
+
           // Actualiza el marcador en localStorage
           this.updateMarkerInLocalStorage(id, newLngLat.lng, newLngLat.lat, markerToUpdate.firebaseId);
           console.log(`Marcador con ID ${id} actualizado en localStorage`);
@@ -356,6 +389,24 @@ export class MapComponent implements OnDestroy {
         });
       }
     });
+  }
+
+  // Método para resaltar el marcador por su ID
+  highlightMarkerById(markerId: string) {
+    const markerObj = this.markers.find(markerObj => markerObj.firebaseId === markerId);
+
+    if (markerObj) {
+      // Mostrar la tarjeta de información del marcador
+      this.onMarkerClick(markerObj);
+
+      // Centrar el mapa en el marcador
+      this.map?.flyTo({
+        center: markerObj.marker.getLngLat(),
+        zoom: 14,
+      });
+    } else {
+      console.warn('No se encontró un marcador con el ID proporcionado.');
+    }
   }
 
   loadMarkersFromLocalStorage() {
