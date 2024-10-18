@@ -9,13 +9,13 @@ export const navbarData = [
         routeLink: 'map',
         icon: 'bi bi-map-fill',
         label: 'Mapas',
-        roles: ['usuario-regular', 'moderador', 'administrador']
+        roles: ['usuario-invitado','usuario-regular', 'moderador', 'administrador']
     },
     {
         routeLink: 'activities',
         icon: 'bi bi-calendar-event-fill',
         label: 'Actividades',
-        roles: ['moderador', 'administrador']
+        roles: ['usuario-invitado','usuario-regular', 'moderador', 'administrador']
     },
     {
         routeLink: 'saved-places',

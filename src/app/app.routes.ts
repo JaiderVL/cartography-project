@@ -18,6 +18,7 @@ export const routes: Routes = [
       { path: 'activities', component: ActivitiesComponent },
       { path: 'saved-places', component: SavedPlacesComponent },
       { path: 'admin-page', component: AdminPageComponent },
+      { path: '', redirectTo: 'main', pathMatch: 'full' }
       
     ]
   },
