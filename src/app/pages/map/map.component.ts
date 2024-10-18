@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environments';
 import { PlaceCardComponent } from "./place-card/place-card.component";
 import { Marker as MarkerModel } from '../../core/models/marker.model';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../core/services/auth.service'; // Importamos AuthService
 
 mapboxgl.accessToken = environment.mapbox_key;
 
@@ -57,11 +58,14 @@ export class MapComponent implements OnInit, OnDestroy {
   private markerIdFromParams: string | null = null;
   private queryParamsProcessed: boolean = false;
   private displayAllMarkers: boolean = true;
+  public userRole: string | null = null; // Variable para almacenar el rol del usuario
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private markerService: MarkerService
+    private markerService: MarkerService,
+    private authService: AuthService // Inyectamos AuthService para acceder al rol del usuario
+
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -72,6 +76,12 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+      // Suscribirse al rol del usuario
+    this.authService.userRole$.subscribe(role => {
+      this.userRole = role; // Guardamos el rol actual del usuario
+    });
+
     // Suscribirse a los parámetros de consulta
     this.route.queryParams.subscribe(params => {
       this.markerIdFromParams = params['markerId'] || null;
@@ -82,6 +92,7 @@ export class MapComponent implements OnInit, OnDestroy {
         this.displayAllMarkers = true;
       }
     });
+    
   }
 
   ngAfterViewInit(): void {

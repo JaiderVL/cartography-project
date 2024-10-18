@@ -17,12 +17,12 @@ export const navbarData = [
         label: 'Actividades',
         roles: ['usuario-invitado','usuario-regular', 'moderador', 'administrador']
     },
-    {
-        routeLink: 'saved-places',
-        icon: 'bi bi-bookmark-fill',
-        label: 'Lugares Guardados',
-        roles: ['usuario-regular', 'moderador', 'administrador']
-    },
+    // {
+    //     routeLink: 'saved-places',
+    //     icon: 'bi bi-bookmark-fill',
+    //     label: 'Lugares Guardados',
+    //     roles: ['usuario-regular', 'moderador', 'administrador']
+    // },
     {
         routeLink: 'admin-page',
         icon: 'bi bi-people-fill',

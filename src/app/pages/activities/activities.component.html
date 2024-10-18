@@ -47,7 +47,7 @@
       </div>
     </div>
     <!-- Aplicamos *ngIf para asegurarnos de que activeDay está definido -->
-    <div class="right" *ngIf="activeDay">
+    <div class="right" *ngIf="activeDay"  >
       <div class="today-date">
         <div class="event-day">
           {{ activeDayName }}
@@ -60,7 +60,7 @@
         <div *ngIf="activeDay.events.length === 0" class="no-event">
           <h3>No hay eventos</h3>
         </div>
-        <div *ngFor="let event of activeDay.events" class="event">
+        <div *ngFor="let event of activeDay.events" class="event" >
           <div class="title">
             <h3>{{ event.title }}</h3>
           </div>
@@ -81,7 +81,8 @@
         </div>
       </div>
     </div>
-    <div class="add-event-wrapper" [class.active]="isAddEventActive">
+    
+    <div class="add-event-wrapper" [class.active]="isAddEventActive"  >
       <div class="add-event-header">
         <div class="title">{{ editingEventId ? 'Editar evento' : 'Agregar evento' }}</div>
         <i class="bi bi-x-lg close" (click)="toggleAddEvent()"></i>
@@ -151,7 +152,7 @@
         </form>
       </div>
     </div>
-    <button class="add-event" (click)="toggleAddEvent()">
+    <button class="add-event" (click)="toggleAddEvent()" *ngIf="userRole === 'administrador' || 'moderador'" >
       <i class="bi bi-calendar-event"></i>
     </button>
   </div>
