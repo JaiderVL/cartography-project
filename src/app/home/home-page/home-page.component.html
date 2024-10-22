@@ -6,7 +6,7 @@
   </header>
 
   <!-- Sidebar -->
-  <div [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
+  <div class="sidenav" [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
     <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
   </div>
 

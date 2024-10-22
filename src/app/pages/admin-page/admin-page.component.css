@@ -1,5 +1,11 @@
 /* Estilos base */
+.wrapper{
+  height: 100%;
+  width: 100%;
+}
+
 table {
+  height: 100%;
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
