@@ -6,13 +6,17 @@
   </header>
 
   <!-- Sidebar -->
-  <div  [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
+  <div [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
     <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- Contenido principal con el mapa como fondo -->
   <div [ngClass]="isSideNavCollapsed ? 'content-collapsed' : 'content-expanded'">
   
+    <div class="map-container">
+      <app-map *ngIf="showMap"></app-map>
+    </div>
+
     <div class="home-container">
       <router-outlet></router-outlet>
     </div>

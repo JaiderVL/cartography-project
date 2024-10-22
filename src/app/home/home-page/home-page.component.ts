@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AdminPageComponent } from '../../pages/admin-page/admin-page.component';
 import { HeaderComponent } from "../../layout/header/header.component";
 import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
@@ -28,7 +28,14 @@ export class HomePageComponent implements OnInit {
   role: string | null = 'usuario-invitado'; // Usuario invitado por defecto
   isSideNavCollapsed = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showMap = event.url !== '/map';
+      }
+    });
+  }
+  public showMap: boolean = true;
 
   ngOnInit() {
     // Suscribirse al rol del usuario
