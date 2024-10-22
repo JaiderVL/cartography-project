@@ -1,40 +1,39 @@
 <!-- place-card.component.html -->
 <div class="container" *ngIf="place$ | async as place">
-    <!-- Tarjeta de descripción -->
-    <div class="card-wrapper">
-      <span class="top-left">Descripción</span>
-      <div
-        class="card card-1"
-        [ngStyle]="{ 'background-image': 'url(' + place.src + ')' }"
-      >
-        <div class="card-overlay">
-          <div class="card-title">
-            <i class="bi bi-geo-alt text-danger"></i>
-            {{ place.title }}
-          </div>
-          <div class="card-description">{{ place.description }}</div>
+  <!-- Tarjeta de descripción -->
+  <div class="card-wrapper">
+    <span class="top-left">Descripción</span>
+    <div
+      class="card card-1"
+      [ngStyle]="{ 'background-image': 'url(' + place.src + ')' }"
+    >
+      <div class="card-overlay">
+        <div class="card-title">
+          <i class="bi bi-geo-alt text-danger"></i>
+          {{ place.title }}
         </div>
-      </div>
-    </div>
-  
-    <!-- Galería de imágenes -->
-    <div class="card-wrapper">
-      <span class="top-left">Imágenes</span>
-      <div class="card card-2">
-        <img
-          *ngFor="let image of place.images"
-          [src]="image.src"
-          [alt]="image.alt"
-          (click)="showImageInModal(image.src)"
-          loading="lazy"
-        />
+        <div class="card-description">{{ place.description }}</div>
       </div>
     </div>
   </div>
-  
-  <!-- Modal para la imagen -->
-  <div class="modal" *ngIf="modalImage" (click)="closeModal()">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <img class="modal-content" [src]="modalImage" />
+
+  <!-- Galería de imágenes -->
+  <div class="card-wrapper">
+    <span class="top-left">Imágenes</span>
+    <div class="card card-2">
+      <img
+        *ngFor="let image of place.images"
+        [src]="image.src"
+        [alt]="image.alt"
+        (click)="showImageInModal(image.src)"
+        loading="lazy"
+      />
+    </div>
   </div>
-  
+</div>
+
+<!-- Modal para la imagen -->
+<div class="modal" *ngIf="modalImage" (click)="closeModal()">
+  <span class="close" (click)="closeModal()">&times;</span>
+  <img class="modal-content" [src]="modalImage" />
+</div>

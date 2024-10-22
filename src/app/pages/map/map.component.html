@@ -1,11 +1,10 @@
 <div class="wrapper" id="map" #map></div>
 
-<!-- Mostrar el botón de agregar marcador solo para ciertos roles -->
 <div class="add-marker" *ngIf="userRole === 'administrador'">
   <button class="btn btn-primary" (click)="createMarker()">+ agregar marcador</button>
 </div>
 
-<!-- Mostrar el botón de activar/desactivar modo edición solo para administradores -->
+
 <div class="edit-mode-toggle" *ngIf="userRole === 'administrador'">
   <button class="btn btn-primary" (click)="toggleEditMode()">
     {{ isEditMode ? 'Desactivar Modo Edición' : 'Activar Modo Edición' }}
@@ -16,3 +15,4 @@
   <button class="close-btn" (click)="closePlaceCards()">X</button>
   <app-place-card [markerId]="selectedMarkerId"></app-place-card>
 </div>
+
