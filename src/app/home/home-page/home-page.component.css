@@ -2,38 +2,42 @@
 .wrapper {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: relative;
+  box-sizing: border-box; 
+  /* overflow: hidden;  */
 }
 
 
 /* Contenido principal */
-.content-expanded {
+.content-expanded, .content-collapsed {
   margin-left: 5rem;
   transition: margin-left 0.3s ease;
   flex-grow: 1;
   margin-top: 60px; /* Ajuste para que el contenido no se superponga con el header */
   position: relative;
+  height: calc(100vh - 60px); /* Ajusta para que el contenido ocupe el espacio correcto */
+  max-width: 100%; /* Asegura que el contenido no exceda el ancho de la pantalla */
 }
 
 .content-collapsed {
   margin-left: 16.5625rem;
-  transition: margin-left 0.3s ease;
-  flex-grow: 1;
-  margin-top: 60px; /* Ajuste para que el contenido no se superponga con el header */
-  position: relative;
 }
+
 
 /* Map container */
 .map-container {
   position: absolute;
+  height: 100%;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1; 
-  pointer-events: none; /* Permite que el contenido encima del mapa sea interactivo */
-
+  z-index: 1;
+  pointer-events: none;
+  max-width: 100%; /* Asegura que el mapa no exceda el ancho del contenedor */
+  overflow: hidden; /* Evita desbordamientos */
 }
 
 /* Home container styling */
@@ -43,11 +47,14 @@
   flex-direction: column;
   text-align: center;
   position: relative;
-  z-index: 2; 
+  z-index: 2;
   background-color: rgba(0, 0, 0, 0.5);
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
+  max-width: 100%; /* Asegura que no se exceda el ancho de la pantalla */
+  box-sizing: border-box;
 }
+
 
 /* For large screens */
 .home-container h2 {
