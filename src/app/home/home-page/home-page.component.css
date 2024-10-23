@@ -94,6 +94,8 @@
   }
 }
 
+
+
 /* Very small screens (mobile) */
 @media (max-width: 480px) {
   .home-container {
@@ -110,7 +112,7 @@
 
   /* Ensure sidebar is fixed at the bottom for mobile */
   .sidenav {
-    z-index: 10;
+    z-index: 99;
   }
 
   .sidenav-collapsed {
