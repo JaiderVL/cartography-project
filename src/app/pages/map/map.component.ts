@@ -70,7 +70,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Ajuste en la condición para considerar parámetros de consulta
-        this.isMapRoute = event.url.startsWith('/map');
+        this.isMapRoute = event.url.startsWith('/home/map');
       }
     });
   }

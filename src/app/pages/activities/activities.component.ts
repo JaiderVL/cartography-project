@@ -420,7 +420,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
   loadMap(event: Event): void {
     if (event.markerId) {
-      this.router.navigate(['/map'], { queryParams: { markerId: event.markerId } });
+      this.router.navigate(['/home/map'], { queryParams: { markerId: event.markerId } });
     } else {
       alert('Este evento no tiene un marcador asociado.');
     }

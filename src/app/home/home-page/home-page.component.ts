@@ -5,6 +5,7 @@ import { AdminPageComponent } from '../../pages/admin-page/admin-page.component'
 import { HeaderComponent } from "../../layout/header/header.component";
 import { SidebarComponent } from "../../layout/sidebar/sidebar.component";
 import { MapComponent } from "../../pages/map/map.component";
+import { AppComponent } from "../../app.component";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -19,7 +20,8 @@ interface SideNavToggle {
     SidebarComponent,
     AdminPageComponent,
     RouterModule,
-    MapComponent
+    MapComponent,
+    AppComponent
 ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']

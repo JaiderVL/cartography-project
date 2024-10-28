@@ -6,8 +6,6 @@ import { SavedPlacesComponent } from './pages/saved-places/saved-places.componen
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { MainComponent } from './pages/main/main.component';
 
-
-
 export const routes: Routes = [
   {
     path: 'home',
@@ -19,20 +17,20 @@ export const routes: Routes = [
       { path: 'saved-places', component: SavedPlacesComponent },
       { path: 'admin-page', component: AdminPageComponent },
       { path: '', redirectTo: 'main', pathMatch: 'full' }
-      
     ]
   },
   {
-    path: 'auth',  // Carga lazily el módulo de autenticación
+    path: 'auth',
     loadChildren: () => import('./auth/auth-routing.module').then(m => m.AuthRoutingModule),
   },
   {
     path: '',
-    redirectTo: 'home/main', // Redirige automáticamente a 'main' dentro de 'home' si la ruta está vacía
+    redirectTo: 'home/main',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'home/main' // Redirige a 'main' si la ruta no es válida
+    redirectTo: 'home/main'
   }
 ];
+
