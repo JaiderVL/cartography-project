@@ -125,67 +125,80 @@
   font-weight: 500;
 }
 
+
+
+
+
+
 /* --- Estilos Responsivos --- */
 /* Cuando el ancho de la pantalla es menor o igual a 768px */
 @media (max-width: 768px) {
-  /* Ajustar los anchos de los contenedores */
-  .container-body-img,
+  /* Ajustar los anchos de los contenedores y centrar el contenido */
   .container-body-info,
-  .card-info {
-    width: 100%;
+  .container-body-img,
+  .card-info,
+  .card-img {
+    width: 90%; /* Ajustar el ancho al 90% del contenedor */
+    margin: 0 auto; /* Centrar en pantalla */
     right: auto;
     bottom: auto;
+    text-align: center; /* Centrar el contenido en el contenedor */
   }
 
-  /* Ajustar el layout de la cuadrícula de imágenes */
+  /* Centrando y ajustando las imágenes de las tarjetas */
   .card-body-img {
-    grid-template-columns: 1fr; /* Una columna */
+    grid-template-columns: 1fr; /* Una columna en móviles */
     grid-template-rows: none;
-    justify-items: center; /* Centrar los elementos en la cuadrícula */
+    gap: 10px;
+    justify-items: center;
   }
 
-  /* Ajustar el tamaño de las imágenes en el grid */
   .card-body-img img {
     width: 100%;
-    max-width: 300px; /* Limitar el ancho máximo */
+    max-width: 280px; /* Limitar el ancho máximo de cada imagen */
     height: auto;
-    margin: 0 auto; /* Centrar la imagen */
+    margin: 0 auto;
+    object-fit: cover; /* Asegura que la imagen se ajuste bien */
+    border-radius: 5px;
   }
 
-  /* Ajustar tamaños de fuente y márgenes si es necesario */
+  /* Ajustar títulos y texto en el centro */
   .card-title-img,
   .card-title-info {
     font-size: 16px;
-    margin-left: 0;
     justify-content: center;
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 10px;
   }
 
   .card-text-info {
     font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
   }
 
   .visit-btn {
     font-size: 12px;
-    margin: 0 auto;
     display: block;
+    margin: 10px auto;
+    padding: 8px 20px;
   }
 
-  /* Ajustar el layout de la sección de información */
+  /* Ajustar contenedor de imágenes principales */
   .grid-container-info {
-    grid-template-columns: 1fr; /* Una columna */
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  /* Ajustar el tamaño de la imagen principal */
   .image-container-info {
-    max-width: 100%;
-    max-height: none;
-    margin: 0 auto; /* Centrar el contenedor de imagen */
-    text-align: center; /* Centrar el contenido dentro del contenedor */
+    max-width: 280px;
+    margin: 0 auto;
   }
 
   .image-container-info img {
     width: 100%;
-    max-width: 300px; /* Limitar el ancho máximo */
+    max-width: 280px;
     height: auto;
   }
 }

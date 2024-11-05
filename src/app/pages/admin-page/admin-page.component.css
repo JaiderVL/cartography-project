@@ -68,6 +68,9 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+  .user-card{
+    color: black;
+  }
   table {
     display: none;
   }

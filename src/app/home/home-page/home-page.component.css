@@ -2,7 +2,7 @@
 .wrapper {
   display: flex;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   position: relative;
   box-sizing: border-box; 
   /* overflow: hidden;  */
@@ -18,6 +18,7 @@
   position: relative;
   height: calc(100vh - 60px); /* Ajusta para que el contenido ocupe el espacio correcto */
   max-width: 100%; /* Asegura que el contenido no exceda el ancho de la pantalla */
+  overflow: auto;
 }
 
 .content-collapsed {
@@ -53,6 +54,8 @@
   width: 100%;
   max-width: 100%; /* Asegura que no se exceda el ancho de la pantalla */
   box-sizing: border-box;
+  overflow: auto;
+
 }
 
 
@@ -68,6 +71,8 @@
   margin-bottom: 20px;
 }
 
+
+
 /* Medium screens */
 @media (max-width: 992px) {
   .home-container h2 {
@@ -81,8 +86,10 @@
 
 /* Small screens */
 @media (max-width: 768px) {
+
   .home-container {
     padding-top: 60px;
+    max-width: 100%;
   }
 
   .home-container h2 {
@@ -94,12 +101,10 @@
   }
 }
 
-
-
 /* Very small screens (mobile) */
 @media (max-width: 480px) {
   .home-container {
-    padding-top: 60px;
+    padding-top: 0cm;
   }
 
   .home-container h2 {
@@ -110,9 +115,16 @@
     font-size: 0.9rem;
   }
 
-  /* Ensure sidebar is fixed at the bottom for mobile */
+  /* Sidebar responsive adjustments */
   .sidenav {
-    z-index: 99;
+    width: 100%;
+    height: 5rem;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
   }
 
   .sidenav-collapsed {
@@ -130,6 +142,7 @@
 
   .content-expanded, .content-collapsed {
     margin-left: 0;
-    margin-top: 60px; /* Ensure margin from the header */
+    margin-top: 60px; /* Espacio para el header */
+    padding-bottom: 5rem; /* Espacio para el sidebar */
   }
 }
