@@ -1,0 +1,60 @@
+<form class="container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <!-- Mensaje de Carga -->
+    <div *ngIf="isLoading" class="loading-message">
+        <p>Espera un momento...</p>
+    </div>
+
+    <div class="form signup" *ngIf="!isLoading">
+        <div class="form-content">
+            <header>Signup</header>
+            
+            <!-- Mostrar mensaje de error si el correo ya existe -->
+            <div *ngIf="errorMessage" class="error-message">
+                <p style="color: red;">{{ errorMessage }}</p>
+            </div>
+
+            <div class="field input-field">
+                <input type="email" formControlName="email" placeholder="Email" class="input">
+                <!-- Mensaje de error si el email no es válido -->
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                    <p style="color: red;">Please enter a valid email address.</p>
+                </div>
+            </div>
+
+            <div class="field input-field">
+                <input type="password" formControlName="password" placeholder="Create password" class="password">
+                <!-- Mensaje de error si la contraseña no cumple los requisitos -->
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                    <p style="color: red;">Password must be at least 6 characters.</p>
+                </div>
+            </div>
+
+            <div class="field input-field">
+                <input type="password" formControlName="confirmPassword" placeholder="Confirm password" class="password">
+                <i class='bx bx-hide eye-icon'></i>
+                <!-- Mostrar mensaje de error si las contraseñas no coinciden -->
+                <div *ngIf="registerForm.hasError('passwordsMismatch') && registerForm.get('confirmPassword')?.touched">
+                    <p style="color: red;">Passwords do not match.</p>
+                </div>
+            </div>
+
+            <div class="field button-field">
+                <!-- Botón deshabilitado si el formulario no es válido -->
+                <button type="submit" [disabled]="registerForm.invalid">Signup</button>
+            </div>
+
+            <div class="form-link">
+                <span>Already have an account? <a routerLink="/auth/login" class="link login-link">Login</a></span>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="media-options">
+            <button (click)="loginWithGoogle()" class="field google">
+                <img src="assets/images/google.png" alt="" class="google-img">
+                <span>Login with Google</span>
+            </button>
+        </div>
+    </div>
+</form>

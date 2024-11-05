@@ -1,0 +1,82 @@
+/* Estilos base */
+.wrapper{
+  height: 100%;
+  width: 100%;
+}
+
+table {
+  height: 100%;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  overflow: hidden;
+  color: black;
+}
+
+thead {
+  background-color: #4A3AFF;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+select, input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.user-card {
+  display: none;
+  background-color: white;
+  margin: 10px 0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-item {
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4A3AFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3b32cc;
+}
+
+@media (max-width: 768px) {
+  table {
+    display: none;
+  }
+
+  .user-card {
+    display: block;
+  }
+
+  .card-item {
+    font-size: 14px;
+  }
+}
