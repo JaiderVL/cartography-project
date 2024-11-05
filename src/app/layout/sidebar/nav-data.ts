@@ -1,32 +1,33 @@
-export const  navbarData = [
+export const navbarData = [
     {
-        routeLink: '/main',
+        routeLink: 'main',
         icon: 'bi bi-house-door-fill',
-        label: 'Inicio'
+        label: 'Inicio',
+        roles: ['usuario-invitado', 'usuario-regular', 'moderador', 'administrador']
     },
     {
-        routeLink: '/map',
+        routeLink: 'map',
         icon: 'bi bi-map-fill',
-        label: 'Mapas'
+        label: 'Mapas',
+        roles: ['usuario-invitado','usuario-regular', 'moderador', 'administrador']
     },
     {
-        routeLink: '/activities',
+        routeLink: 'activities',
         icon: 'bi bi-calendar-event-fill',
-        label: 'Actividades'
+        label: 'Actividades',
+        roles: ['usuario-invitado','usuario-regular', 'moderador', 'administrador']
     },
+    // {
+    //     routeLink: 'saved-places',
+    //     icon: 'bi bi-bookmark-fill',
+    //     label: 'Lugares Guardados',
+    //     roles: ['usuario-regular', 'moderador', 'administrador']
+    // },
     {
-        routeLink: '/saved-places',
-        icon: 'bi bi-bookmark-fill',
-        label: 'lugares guardados'
-    },
-    {
-        routeLink: '/user-manager',
+        routeLink: 'admin-page',
         icon: 'bi bi-people-fill',
-        label: 'Usuarios'
+        label: 'Usuarios',
+        roles: ['administrador']
     },
-    {
-        routeLink: '/settings',
-        icon: 'bi bi-gear-fill',
-        label: 'Configuraciones'
-    },
+
 ];

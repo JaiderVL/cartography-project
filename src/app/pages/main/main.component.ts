@@ -86,7 +86,7 @@ export class MainComponent implements OnInit, OnDestroy {
   loadMap(image: any) {
     const markerId = image.markerId;
     if (markerId) {
-      this.router.navigate(['/map'], { queryParams: { markerId } });
+      this.router.navigate(['/home/map'], { queryParams: { markerId } });
     } else {
       alert('No se pudo cargar el mapa para este marcador.');
     }

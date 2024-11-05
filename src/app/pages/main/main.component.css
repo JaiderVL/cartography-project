@@ -4,7 +4,16 @@
 .container-body-img .container-body-info {
   font-family: "Montserrat", sans-serif;
 }
-
+  
+.wrapper{
+  margin: 20px;
+  display: flex;
+  /* justify-content: center;  */
+  align-items: center; 
+  flex-direction: column; /* Apilar elementos en columna */
+  height: 100%;
+  width: 100%;
+}
 /* Estilos generales para pantallas grandes */
 .container-body-img {
   width: 30rem;

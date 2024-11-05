@@ -1,16 +1,9 @@
-<div class="wrapper">
-    <header class="right-section">
-        <app-header></app-header>
-    </header>
-    <div class="sidenav" [ngClass]="isSideNavCollapsed ? 'sidenav-collapsed' : ''">
-        <app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
-    </div>
-    <div [ngClass]="isSideNavCollapsed ? 'content-collapsed' : 'content-expanded'">
-        <div class="router-outlet">
-            <router-outlet></router-outlet>
-        </div>
-        <div>
-            <app-map *ngIf="showMap"></app-map>
-        </div>
-    </div>
-</div>
+
+ <div *ngIf="isLoading" class="loading-screen">
+    <p>Verificando autenticación...</p>
+  </div>
+
+  <!-- El resto del contenido de la aplicación -->
+   <div *ngIf="!isLoading">
+    <router-outlet></router-outlet>
+  </div>

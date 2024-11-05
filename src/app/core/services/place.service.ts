@@ -10,22 +10,22 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class PlaceService {
-  constructor(private firestore: Firestore) {}
+    constructor(private firestore: Firestore) {}
 
-  getPlaceById(firebaseId: string): Observable<Place> {
+    getPlaceById(firebaseId: string): Observable<Place> {
     const markerDoc = doc(this.firestore, `markers/${firebaseId}`);
     return docData(markerDoc, { idField: 'firebaseId' }).pipe(
-      map((marker: Marker) => ({
+        map((marker: Marker) => ({
         src: marker.coverImage,
         alt: marker.name,
         title: marker.name,
         description: marker.description,
         images: marker.images.map((imgUrl, index) => ({
-          src: imgUrl,
-          alt: `Image ${index + 1}`,
+            src: imgUrl,
+            alt: `Image ${index + 1}`,
         })),
         firebaseId: marker.firebaseId,
-      }))
+        }))
     );
-  }
+    }
 }

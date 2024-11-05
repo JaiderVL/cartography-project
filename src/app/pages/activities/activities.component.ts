@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { MarkerService } from '../../core/services/marker.service';
 import { Marker } from '../../core/models/marker.model';
+import { AuthService } from '../../core/services/auth.service'; // Importamos AuthService
 
 interface Day {
   date: number;
@@ -51,10 +52,14 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   // Lista de parques
   markers: Marker[] = [];
 
+  public userRole: string | null = null; // Variable para almacenar el rol del usuario
+
   constructor(
     private eventService: EventService,
     private router: Router,
-    private markerService: MarkerService
+    private markerService: MarkerService,
+    private authService: AuthService // Inyectamos AuthService para acceder al rol del usuario
+
   ) {
     // Inicializa el formulario reactivo
     this.eventForm = new FormGroup({
@@ -73,6 +78,11 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     // Cargamos los eventos desde Firebase
     this.loadEventsFromFirebase();
     this.loadMarkers(); // Cargamos los parques al inicializar
+
+      // Suscribirse al rol del usuario
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role; // Guardamos el rol actual del usuario
+      });
   }
 
   ngOnDestroy(): void {
@@ -410,7 +420,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
   loadMap(event: Event): void {
     if (event.markerId) {
-      this.router.navigate(['/map'], { queryParams: { markerId: event.markerId } });
+      this.router.navigate(['/home/map'], { queryParams: { markerId: event.markerId } });
     } else {
       alert('Este evento no tiene un marcador asociado.');
     }

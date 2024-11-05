@@ -4,6 +4,7 @@
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
 </div>
+
 <div *ngIf="!isLoading && !errorMessage">
   <div class="wrapper">
     <div class="container-body container-body-info">
@@ -22,7 +23,7 @@
               </div>
             </div>
           </div>
-          <a [routerLink]="['/map']" [queryParams]="{ markerId: currentMarkerId }" class="btn btn-primary btn-sm rounded-pill visit-btn">Visitar</a>
+          <a [routerLink]="['/home/map']" [queryParams]="{ markerId: currentMarkerId }" class="btn btn-primary btn-sm rounded-pill visit-btn">Visitar</a>
         </div>
       </div>
     </div>
@@ -37,7 +38,7 @@
             <img [src]="image.src" [alt]="image.alt" (click)="loadMap(image)" (error)="onImageError($event)">
           </div>
         </div>
-        <a [routerLink]="['/map']" class="btn btn-primary btn-sm rounded-pill">Visitar</a>
+        <a [routerLink]="['/home/map']" class="btn btn-primary btn-sm rounded-pill">Visitar</a>
       </div>
     </div>
   </div>
