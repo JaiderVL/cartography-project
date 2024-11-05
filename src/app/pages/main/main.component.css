@@ -138,11 +138,13 @@
   .container-body-img,
   .card-info,
   .card-img {
-    width: 90%; /* Ajustar el ancho al 90% del contenedor */
+    width: 98%; /* Ajustar el ancho al 90% del contenedor */
     margin: 0 auto; /* Centrar en pantalla */
     right: auto;
     bottom: auto;
     text-align: center; /* Centrar el contenido en el contenedor */
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   /* Centrando y ajustando las imágenes de las tarjetas */
@@ -200,5 +202,8 @@
     width: 100%;
     max-width: 280px;
     height: auto;
+  }
+  .wrapper{
+    margin: 0;
   }
 }
