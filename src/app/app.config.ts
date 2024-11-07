@@ -5,8 +5,9 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app'; // Firebase imports
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { environment } from '../environments/environments'; // Ajusta la ruta si es necesario
+
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { environment } from '../environments//environment.prod';
 
 export const appConfig: ApplicationConfig = {
   providers: [

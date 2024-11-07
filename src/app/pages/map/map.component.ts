@@ -4,7 +4,7 @@ import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/co
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LngLat, Map, Marker } from 'mapbox-gl';
 import { MarkerService } from '../../core/services/marker.service';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment.prod';
 import { PlaceCardComponent } from "./place-card/place-card.component";
 import { Marker as MarkerModel } from '../../core/models/marker.model';
 import { Subscription } from 'rxjs';
