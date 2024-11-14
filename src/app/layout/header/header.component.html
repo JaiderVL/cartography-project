@@ -5,8 +5,8 @@
     <button class="nav-btn register-btn" *ngIf="!isAuthenticated" routerLink="/auth/login">Ingresar / Registrarse</button>
     
     <!-- Mostrar estos iconos solo si el usuario está autenticado -->
-    <button class="nav-btn icon-btn bell-icon" *ngIf="isAuthenticated"><i class="bi bi-bell-fill"></i></button>
-    <button class="nav-btn icon-btn user-icon" *ngIf="isAuthenticated"><i class="bi bi-person-circle"></i></button>
+    <!-- <button class="nav-btn icon-btn bell-icon" *ngIf="isAuthenticated"><i class="bi bi-bell-fill"></i></button> -->
+    <!-- <button class="nav-btn icon-btn user-icon" *ngIf="isAuthenticated"><i class="bi bi-person-circle"></i></button> -->
     
     <!-- Botón de cerrar sesión solo si está autenticado -->
     <button class="nav-btn icon-btn" *ngIf="isAuthenticated" (click)="logout()"><i class="bi bi-box-arrow-left"></i></button>
