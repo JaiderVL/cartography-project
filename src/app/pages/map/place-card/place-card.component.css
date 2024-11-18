@@ -143,3 +143,85 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+
+
+
+
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Apilado en columna para dispositivos móviles */
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-1 {
+        height: 200px;
+    }
+
+    .card-overlay {
+        padding: 10px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .card-description {
+        font-size: 12px;
+        max-height: 70px;
+    }
+
+    .card-2 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .top-left {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+    
+    .modal-content {
+        width: 80%;
+        max-width: 400px;
+    }
+
+    .close {
+        font-size: 30px;
+        top: 10px;
+        right: 15px;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (menos de 480px) */
+@media (max-width: 480px) {
+    .card-1 {
+        height: 150px;
+    }
+
+    .card-title {
+        font-size: 14px;
+    }
+
+    .card-description {
+        font-size: 11px;
+    }
+
+    .card-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 90%;
+        max-width: 350px;
+    }
+}

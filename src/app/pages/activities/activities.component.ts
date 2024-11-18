@@ -70,7 +70,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       park: new FormControl('', Validators.required),
     });
   }
-
+  
   ngOnInit(): void {
     // Intentamos cargar los eventos desde localStorage
     this.loadEventsFromLocalStorage();

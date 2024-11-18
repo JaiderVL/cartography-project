@@ -69,8 +69,8 @@
             {{ formatTime(event.timeFrom) }} - {{ formatTime(event.timeTo) }}
           </div>
           <div class="park">Parque: {{ event.park }}</div>
-          <div class="event-buttons">
-            <button class="icon-button edit" (click)="editEvent(event)">
+          <div class="event-buttons" *ngIf="userRole === 'administrador' || userRole === 'moderador'">
+            <button class="icon-button edit" (click)="editEvent(event)" >
               <i class="bi bi-pencil-fill"></i>
             </button>
             <button class="icon-button delete" (click)="deleteEvent(event)">
@@ -152,7 +152,7 @@
         </form>
       </div>
     </div>
-    <button class="add-event" (click)="toggleAddEvent()" *ngIf="userRole === 'administrador' || 'moderador'" >
+    <button class="add-event" (click)="toggleAddEvent()" *ngIf="userRole === 'administrador' || userRole === 'moderador'" >
       <i class="bi bi-calendar-event"></i>
     </button>
   </div>
