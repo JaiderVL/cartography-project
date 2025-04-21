@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'; 
 import { Auth, authState, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { sendPasswordResetEmail } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,7 +15,7 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string>('usuario-invitado');
   userRole$ = this.userRoleSubject.asObservable(); // Observable que pueden usar otros componentes
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor(private auth: Auth, private firestore: Firestore, ) {
     // Inicializa el observable del estado del usuario autenticado
     this.user$ = authState(this.auth);
 
@@ -29,6 +30,8 @@ export class AuthService {
       }
     });
   }
+
+  
 
   // Observable que emite si el usuario está autenticado o no
   isAuthenticated$: Observable<boolean> = authState(this.auth).pipe(
@@ -95,14 +98,27 @@ export class AuthService {
 
     throw new Error('User document does not exist in Firestore');
   }
-
+  
   // Método para cerrar sesión
   logout() {
     return signOut(this.auth).then(() => {
       this.userRoleSubject.next('usuario-invitado'); // Emitir "usuario-invitado" al hacer logout
     });
   }
+  // Método para enviar el correo de recuperación con manejo de errores
+  sendPasswordResetEmail(email: string) {
+    return sendPasswordResetEmail(this.auth, email)
+      .then(() => {
+        console.log('Correo de recuperación enviado');
+        return { success: true, message: 'Correo de recuperación enviado' };
+      })
+      .catch((error) => {
+        console.error('Error al enviar correo de recuperación:', error);
+        return { success: false, message: error.message };
+      });
+  }
 
+  
   // Método para iniciar sesión con Google
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -132,3 +148,4 @@ export class AuthService {
     this.userRoleSubject.next(newRole); // Emitir el nuevo rol actualizado
   }
 }
+
