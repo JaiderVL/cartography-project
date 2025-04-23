@@ -36,4 +36,22 @@ export class PlaceCardComponent implements OnInit {
   closeModal() {
     this.modalImage = null;
   }
+  
+  getDirections(lat: number, lng: number) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+
+        // Crear enlaces para Google Maps y Waze
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
+        const wazeUrl = `waze://?ll=${lat},${lng}&navigate=yes`;
+
+        // Redirigir a Google Maps o Waze
+        window.open(googleMapsUrl, '_blank');  // O usa `wazeUrl` si prefieres redirigir a Waze
+      });
+    } else {
+      alert('No se pudo obtener la ubicación del usuario');
+    }
+  }
 }

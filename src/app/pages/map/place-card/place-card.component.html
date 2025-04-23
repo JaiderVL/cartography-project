@@ -13,6 +13,9 @@
           {{ place.title }}
         </div>
         <div class="card-description">{{ place.description }}</div>
+        <div class="card-wrapper-btn">
+          <button class="btn btn-primary-como-llegar" (click)="getDirections(place.lat, place.lng)">Cómo llegar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +33,10 @@
       />
     </div>
   </div>
+    <!-- Botón de "Cómo llegar" -->
+  
+
+
 </div>
 
 <!-- Modal para la imagen -->

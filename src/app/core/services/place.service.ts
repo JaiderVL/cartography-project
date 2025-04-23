@@ -25,6 +25,8 @@ export class PlaceService {
             alt: `Image ${index + 1}`,
         })),
         firebaseId: marker.firebaseId,
+        lat: marker.lat,  // Asegúrate de incluir las coordenadas
+        lng: marker.lng   // Asegúrate de incluir las coordenadas
         }))
     );
     }

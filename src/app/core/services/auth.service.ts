@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'; 
 import { Auth, authState, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
-import { sendPasswordResetEmail } from '@angular/fire/auth';
+import { sendPasswordResetEmail, fetchSignInMethodsForEmail, AuthError  } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -105,19 +105,70 @@ export class AuthService {
       this.userRoleSubject.next('usuario-invitado'); // Emitir "usuario-invitado" al hacer logout
     });
   }
-  // Método para enviar el correo de recuperación con manejo de errores
-  sendPasswordResetEmail(email: string) {
-    return sendPasswordResetEmail(this.auth, email)
-      .then(() => {
-        console.log('Correo de recuperación enviado');
-        return { success: true, message: 'Correo de recuperación enviado' };
-      })
-      .catch((error) => {
-        console.error('Error al enviar correo de recuperación:', error);
-        return { success: false, message: error.message };
-      });
+  // // Método para enviar el correo de recuperación con manejo de errores
+  // sendPasswordResetEmail(email: string) {
+  //   return sendPasswordResetEmail(this.auth, email)
+  //     .then(() => {
+  //       console.log('Correo de recuperación enviado');
+  //       return { success: true, message: 'Correo de recuperación enviado' };
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error al enviar correo de recuperación:', error);
+  //       return { success: false, message: error.message };
+  //     });
+  // }
+
+  async checkIfEmailExists(email: string): Promise<boolean> {
+    try {
+      // Intentamos enviar el correo directamente
+      await sendPasswordResetEmail(this.auth, email);
+      return true;
+    } catch (error: any) {
+      if (error.code === 'auth/user-not-found') {
+        return false;
+      }
+      throw error; // Relanzamos otros errores
+    }
   }
 
+  // Método actualizado para enviar correo de recuperación
+  async sendPasswordResetEmail(email: string) {
+    try {
+      // Verificamos primero si el email existe
+      const emailExists = await this.checkIfEmailExists(email);
+      
+      if (!emailExists) {
+        return { 
+          success: false, 
+          message: 'No existe una cuenta asociada a este correo electrónico.' 
+        };
+      }
+      
+      // Si existe, enviamos el correo
+      await sendPasswordResetEmail(this.auth, email);
+      return { 
+        success: true, 
+        message: 'Correo de recuperación enviado. Por favor revisa tu bandeja de entrada.' 
+      };
+    } catch (error: any) {
+      console.error('Error al enviar correo de recuperación:', error);
+      
+      // Mensajes más amigables para errores comunes
+      let errorMessage = 'Ocurrió un error al enviar el correo de recuperación.';
+      if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Demasiados intentos. Por favor intenta más tarde.';
+      }
+      
+      return { 
+        success: false, 
+        message: errorMessage 
+      };
+    }
+  }
+
+
+
+  
   
   // Método para iniciar sesión con Google
   async loginWithGoogle() {

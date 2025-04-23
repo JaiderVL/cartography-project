@@ -35,7 +35,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+
     color: white;
     box-sizing: border-box;
 }
@@ -91,6 +92,18 @@
 .card-wrapper {
     position: relative;
     padding-top: 30px; /* Espacio para el título */
+}
+.card-wrapper-btn {
+    position: relative;
+    padding-top: 10px; /* Espacio para el título */
+    font-weight: bold;
+}
+.btn-primary-como-llegar{
+    background-color: #4A3AFF;
+    color: whitesmoke;
+    padding: 4px 1rem;
+    border: none;
+    border-radius: 1rem;
 }
 
 .top-left {
