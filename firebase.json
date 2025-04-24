@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/cartografia/browser",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
