@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class PlaceService {
     constructor(private firestore: Firestore) {}
@@ -26,7 +26,9 @@ export class PlaceService {
         })),
         firebaseId: marker.firebaseId,
         lat: marker.lat,  // Asegúrate de incluir las coordenadas
-        lng: marker.lng   // Asegúrate de incluir las coordenadas
+        lng: marker.lng,  // Asegúrate de incluir las coordenadas
+        ratings: marker.ratings,  // Añadimos ratings (calificaciones)
+        averageRating: marker.averageRating,  // Añadimos el promedio de calificación
         }))
     );
     }

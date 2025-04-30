@@ -16,6 +16,22 @@
     position: relative;
 }
 
+/* .rating-wrapper{
+    /* width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+} */
+
+.rating-wrapper {
+    width: 100px;
+    display: flex;
+    justify-content: center;  /* Centrado horizontal */
+    align-items: center;  /* Centrado vertical */
+    margin-top: 10px;  /* Añadir un poco de espacio desde la descripción */
+    gap: 10px;  /* Espacio entre el texto y las estrellas */
+}
+
 .card-1 {
     background-size: cover;
     background-position: center;

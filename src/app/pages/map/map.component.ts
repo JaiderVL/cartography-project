@@ -180,65 +180,133 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
+  // async createMarker(lnglat?: LngLat) {
+  //   if (!this.map) {
+  //     console.error('El mapa no está inicializado');
+  //     return;
+  //   }
+
+  //   // Activa el modo edición antes de crear el marcador
+  //   if (!this.isEditMode) {
+  //     this.isEditMode = true;
+  //     this.toggleEditMode();
+  //   }
+
+  //   const position = lnglat || this.map.getCenter();
+  //   const name = prompt('Por favor, ingresa un nombre para el nuevo marcador:');
+  //   const description = prompt('Por favor, ingresa una descripción para el marcador:');
+
+  //   // Puedes personalizar el color en el futuro
+  //   const color = prompt('Por favor, ingresa un color para el marcador (en formato hexadecimal):', '#ff0000') || '#ff0000';
+
+  //   // Solicita la URL de la imagen de portada
+  //   const coverImage = prompt('Ingresa la URL de la imagen de portada para el marcador:', '') || '';
+
+  //   // Suponemos que se solicitan 6 URLs de imágenes adicionales
+  //   const images = Array(6).fill(null).map((_, index) =>
+  //     prompt(`Ingresa la URL de la imagen ${index + 1} para el marcador (puede dejar vacío si no hay imagen):`, '') || ''
+  //   ).filter(url => url); // Filtra cualquier URL vacía
+
+  //   if (name && description) {
+  //     this.markerId++;
+  //     const id = this.markerId;
+
+  //     const marker = new Marker({
+  //       color: color,
+  //       draggable: true // Siempre lo hacemos arrastrable al crear el marcador
+  //     })
+  //       .setLngLat(position)
+  //       .addTo(this.map);
+
+  //     // Guarda el objeto marcador con un dragListener undefined inicialmente
+  //     const markerObj: MarkerAndColor = { id, color, marker, name, description, coverImage, images };
+
+  //     // Añade el evento de actualización si el modo de edición está activado
+  //     markerObj.dragListener = () => this.confirmMarkerUpdate(marker, id);
+  //     marker.on('dragend', markerObj.dragListener);
+
+  //     this.markers.push(markerObj);
+
+  //     const markerData: MarkerModel = { id, name, description, lng: position.lng, lat: position.lat, color, coverImage, images };
+  //     await this.saveMarkerToFirebaseAndLocalStorage(markerData, marker);
+
+  //     // Añadir evento para mostrar el nombre al pasar el cursor
+  //     this.addMarkerTooltip(marker, name);
+
+  //     // Añadir evento de clic para mostrar la tarjeta de detalles
+  //     marker.getElement().addEventListener('click', () => {
+  //       this.onMarkerClick(markerObj);
+  //     });
+  //   }
+  // }
   async createMarker(lnglat?: LngLat) {
     if (!this.map) {
       console.error('El mapa no está inicializado');
       return;
     }
-
+  
     // Activa el modo edición antes de crear el marcador
     if (!this.isEditMode) {
       this.isEditMode = true;
       this.toggleEditMode();
     }
-
+  
     const position = lnglat || this.map.getCenter();
     const name = prompt('Por favor, ingresa un nombre para el nuevo marcador:');
     const description = prompt('Por favor, ingresa una descripción para el marcador:');
-
-    // Puedes personalizar el color en el futuro
+    
+    // Solicitar detalles del marcador
     const color = prompt('Por favor, ingresa un color para el marcador (en formato hexadecimal):', '#ff0000') || '#ff0000';
-
-    // Solicita la URL de la imagen de portada
     const coverImage = prompt('Ingresa la URL de la imagen de portada para el marcador:', '') || '';
-
-    // Suponemos que se solicitan 6 URLs de imágenes adicionales
+    
     const images = Array(6).fill(null).map((_, index) =>
       prompt(`Ingresa la URL de la imagen ${index + 1} para el marcador (puede dejar vacío si no hay imagen):`, '') || ''
-    ).filter(url => url); // Filtra cualquier URL vacía
-
+    ).filter(url => url); // Filtra las URLs vacías
+  
     if (name && description) {
       this.markerId++;
       const id = this.markerId;
-
+  
+      // Crear el marcador en el mapa
       const marker = new Marker({
         color: color,
-        draggable: true // Siempre lo hacemos arrastrable al crear el marcador
+        draggable: true
       })
-        .setLngLat(position)
-        .addTo(this.map);
-
+      .setLngLat(position)
+      .addTo(this.map);
+  
       // Guarda el objeto marcador con un dragListener undefined inicialmente
       const markerObj: MarkerAndColor = { id, color, marker, name, description, coverImage, images };
-
-      // Añade el evento de actualización si el modo de edición está activado
       markerObj.dragListener = () => this.confirmMarkerUpdate(marker, id);
       marker.on('dragend', markerObj.dragListener);
-
+  
       this.markers.push(markerObj);
-
-      const markerData: MarkerModel = { id, name, description, lng: position.lng, lat: position.lat, color, coverImage, images };
+  
+      // Datos del marcador con ratings y averageRating
+      const markerData: MarkerModel = {
+        id, 
+        name, 
+        description, 
+        lng: position.lng, 
+        lat: position.lat, 
+        color, 
+        coverImage, 
+        images,
+        ratings: [], // Inicializamos el array de calificaciones vacío
+        averageRating: 0 // Inicializamos la calificación promedio a 0
+      };
+  
+      // Guardamos el marcador en Firebase y LocalStorage
       await this.saveMarkerToFirebaseAndLocalStorage(markerData, marker);
-
-      // Añadir evento para mostrar el nombre al pasar el cursor
+  
+      // Añadir eventos para el marcador
       this.addMarkerTooltip(marker, name);
-
-      // Añadir evento de clic para mostrar la tarjeta de detalles
       marker.getElement().addEventListener('click', () => {
         this.onMarkerClick(markerObj);
       });
     }
   }
+  
 
   // Añade el evento para mostrar un tooltip con el nombre del marcador
   addMarkerTooltip(marker: Marker, name: string) {
@@ -325,10 +393,14 @@ export class MapComponent implements OnInit, OnDestroy {
         const markerToUpdate = plainMarkers.find(m => m.id === id);
 
         if (markerToUpdate && markerToUpdate.firebaseId) {
+          // Obtener las calificaciones y el promedio del marcador
+          const ratings = markerToUpdate.ratings || []; // Asegúrate de que ratings esté disponible
+          const averageRating = markerToUpdate.averageRating || 0; // Asegúrate de que averageRating esté disponible
+  
           // Actualiza el marcador en Firebase usando el firebaseId
           console.log(`Actualizando marcador con firebaseId ${markerToUpdate.firebaseId} en Firebase`);
-          await this.markerService.updateMarker(markerToUpdate.firebaseId, newLngLat.lng, newLngLat.lat);
-
+          await this.markerService.updateMarker(markerToUpdate.firebaseId, newLngLat.lng, newLngLat.lat, ratings, averageRating);
+  
           // Actualiza el marcador en localStorage
           this.updateMarkerInLocalStorage(id, newLngLat.lng, newLngLat.lat, markerToUpdate.firebaseId);
           console.log(`Marcador con ID ${id} actualizado en localStorage`);

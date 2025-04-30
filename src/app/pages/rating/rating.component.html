@@ -1,0 +1,10 @@
+<div class="rating-container">
+  <p>Calificación Promedio: {{ averageRating | number:'1.1-1' }} / {{ maxRating }}</p>
+  <div class="stars">
+    <span *ngFor="let star of stars; let i = index" 
+          (click)="ratePark(i + 1)" 
+          [ngClass]="getStarClass(i)">
+      &#9733; <!-- Esto es el símbolo de la estrella -->
+    </span>
+  </div>  
+</div>

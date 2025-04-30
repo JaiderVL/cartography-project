@@ -13,13 +13,16 @@
           {{ place.title }}
         </div>
         <div class="card-description">{{ place.description }}</div>
+      
         <div class="card-wrapper-btn">
           <button class="btn btn-primary-como-llegar" (click)="getDirections(place.lat, place.lng)">Cómo llegar</button>
         </div>
       </div>
     </div>
   </div>
-
+  <div class="rating-wrapper card-wrapper">
+    <app-rating [markerId]="place.firebaseId"></app-rating>  <!-- Pasamos markerId al componente de calificación -->
+  </div>
   <!-- Galería de imágenes -->
   <div class="card-wrapper">
     <span class="top-left">Imágenes</span>
@@ -33,10 +36,6 @@
       />
     </div>
   </div>
-    <!-- Botón de "Cómo llegar" -->
-  
-
-
 </div>
 
 <!-- Modal para la imagen -->

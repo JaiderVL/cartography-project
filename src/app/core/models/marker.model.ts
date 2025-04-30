@@ -8,4 +8,7 @@ export interface Marker {
     images: string[]; 
     coverImage: string;
     firebaseId?: string; 
+
+    ratings: number[]; // Array de calificaciones
+    averageRating: number; // Promedio de las calificaciones
   }

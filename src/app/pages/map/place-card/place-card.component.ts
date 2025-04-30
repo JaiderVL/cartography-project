@@ -4,11 +4,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PlaceService } from '../../../core/services/place.service';
 import { Place } from '../../../core/models/place.model';
 import { Observable } from 'rxjs';
+import { RatingComponent } from '../../rating/rating.component'; // Asegúrate de que la ruta sea correcta
+
 
 @Component({
   selector: 'app-place-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RatingComponent],
   templateUrl: './place-card.component.html',
   styleUrls: ['./place-card.component.css'],
 })
