@@ -1,10 +1,40 @@
 <div class="rating-container">
-  <p>Calificación Promedio: {{ averageRating | number:'1.1-1' }} / {{ maxRating }}</p>
-  <div class="stars">
-    <span *ngFor="let star of stars; let i = index" 
-          (click)="ratePark(i + 1)" 
-          [ngClass]="getStarClass(i)">
-      &#9733; <!-- Esto es el símbolo de la estrella -->
-    </span>
-  </div>  
+  <!-- Mostrar el promedio de calificación -->
+  <div class="average-rating">
+    <p>Calificación Promedio:</p>
+    <div class="stars">
+      <span *ngFor="let star of stars; let i = index" 
+            [ngClass]="getStarClass(i)">
+        &#9733; <!-- Esto es el símbolo de la estrella -->
+      </span>
+    </div>
+  </div>
+
+  <!-- Mostrar el botón para calificar solo si el usuario no ha calificado -->
+  <div *ngIf="!hasRated" class="calification-button-wrapper">
+    <button class="btn btn-primary-como-llegar" (click)="openRatingCard()">Calificar</button>
+  </div>
+
+  <!-- Feedback si el usuario ya calificó -->
+  <div *ngIf="hasRated" class="feedback-message">
+    <p>Ya has calificado este parque.</p>
+  </div>
+
+  <!-- Tarjeta flotante para calificar -->
+  <div *ngIf="ratingCardOpen" class="rating-card">
+
+    <span class="close-btn" (click)="closeRatingCard()">X</span> <!-- Aquí está la X -->
+    <div class="stars">
+      <span *ngFor="let star of stars; let i = index" 
+            (click)="ratePark(i + 1)" 
+            [ngClass]="getStarClassForUser(i)">
+        &#9733;
+      </span>
+    </div>
+
+    <!-- Campo de texto para el comentario -->
+    <textarea [(ngModel)]="userComment" placeholder="Deja un comentario (opcional)" rows="4" class="comment-box"></textarea>
+
+    <button class="btn btn-primary-como-llegar" (click)="submitRating()">Enviar calificación</button>
+  </div>
 </div>

@@ -44,6 +44,10 @@ export class AuthService {
       map(user => !!user) // Retorna true si el usuario está autenticado, false si no
     );
   }
+  getCurrentUserId(): string | null {
+    const user = this.auth.currentUser;
+    return user ? user.uid : null;  // Asegúrate de que el ID se está obteniendo correctamente
+  }
 
   // Método para obtener el rol del usuario actual
   async getCurrentUserRole(): Promise<string | null> {

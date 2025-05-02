@@ -293,7 +293,9 @@ export class MapComponent implements OnInit, OnDestroy {
         coverImage, 
         images,
         ratings: [], // Inicializamos el array de calificaciones vacío
-        averageRating: 0 // Inicializamos la calificación promedio a 0
+        averageRating: 0, // Inicializamos la calificación promedio a 0
+        userRatings:[],
+        comments:[],
       };
   
       // Guardamos el marcador en Firebase y LocalStorage
