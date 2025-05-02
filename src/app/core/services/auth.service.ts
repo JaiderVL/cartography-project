@@ -202,5 +202,10 @@ export class AuthService {
     await setDoc(userRef, { role: newRole }, { merge: true }); // Actualiza solo el campo de rol
     this.userRoleSubject.next(newRole); // Emitir el nuevo rol actualizado
   }
+
+  
+  getCurrentUser() {
+    return this.auth.currentUser;  // Devuelve el usuario actual de Firebase
+  }
 }
 
