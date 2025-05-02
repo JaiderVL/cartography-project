@@ -1,83 +1,165 @@
-/* Estilo base del header para que ocupe todo el ancho */
+/* ========== ESTILOS GENERALES DEL HEADER ========== */
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    /* background-color: transparent; */
-    background-color: #4A3AFF;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    color: white;
-    z-index: 1000;
-    
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #4A3AFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: white;
+  z-index: 1000;
+}
 
-  /* Logo a la izquierda */
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    font-weight: 600;
-  }
-  
-  /* Mantener los items alineados a la derecha */
-  .items {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-  }
-  
-  /* Botones de navegación */
-  .nav-btn {
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 10px;
-  }
-  
-  /* Botón de "Ingresar / Registrarse" */
-  .register-btn {
-    border-radius: 20px;
-    background-color: white;
-    color: #4A3AFF;
-    font-weight: 400;
-  }
+/* Logo */
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+}
 
-  .btn{
-      margin: 10px auto;   
-      background-color: #4A3AFF;
-      color: whitesmoke;
-      padding: 4px 1rem;
-      border-radius: 1rem;
-  }
-  
-  /* Botones de iconos (campana, usuario) */
-  .icon-btn {
-    /* background-color: white; */
-    color: #4A3AFF;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-  
-  .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Responsivo para pantallas más pequeñas */
+/* Contenedor de items */
+.items {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* ========== ESTILOS DE BOTONES ========== */
+/* Botones generales */
+.btn {
+  margin: 10px auto;   
+  background-color: #4A3AFF;
+  color: whitesmoke;
+  padding: 4px 1rem;
+  border-radius: 1rem;
+}
+
+/* Botones de navegación */
+.nav-btn {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Botón de registro especial */
+.register-btn {
+  border-radius: 20px;
+  background-color: white;
+  color: #4A3AFF;
+  font-weight: 400;
+}
+
+/* Botones de iconos */
+.icon-btn {
+  color: #4A3AFF;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ========== MENÚS DESPLEGABLES ========== */
+/* Menú de usuario */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  color: #333;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: auto; /* Ajusta el ancho automáticamente al contenido */
+  min-width: 150px;
+  /* display: none; */
+}
+
+.user-dropdown:hover .user-menu {
+  display: block;
+}
+
+.user-menu p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.user-menu button {
+  background-color: #4A3AFF;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Notificaciones */
+.notifications {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  color: #333;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: 250px;
+  z-index: 1000;
+  /* display: none; */
+}
+
+.bell-icon {
+  cursor: pointer;
+}
+
+.notifications ul {
+  list-style: none;
+  padding: 0;
+}
+
+.notifications li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Flechas para menús desplegables */
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid #fff;
+  margin: 10px auto 0;
+}
+
+.notifications .arrow-up {
+  border-bottom-color: #fff;
+}
+
+/* ========== MEDIA QUERIES ========== */
 @media (max-width: 768px) {
-  /* Asegurar que el header esté fijo y que el contenido comience después de él */
+  /* Ajustes generales */
   body, .wrapper {
     margin-top: 60px;
   }
@@ -85,6 +167,11 @@ header {
   header {
     height: 60px;
     padding: 0 10px;
+  }
+
+  /* Elementos del header */
+  .logo {
+    font-size: 20px;
   }
 
   .nav-btn {
@@ -97,12 +184,16 @@ header {
     height: 35px;
   }
 
-  .logo {
-    font-size: 20px;
+  /* Menús desplegables */
+  .user-menu {
+    width: 120px;
+  }
+
+  .notifications {
+    width: 200px;
   }
 }
 
-/* Para pantallas más pequeñas que 480px (móviles) */
 @media (max-width: 480px) {
   header {
     height: 60px;
@@ -122,139 +213,15 @@ header {
     height: 30px;
   }
 
-  /* Ajustar el margen superior en dispositivos muy pequeños */
   body, .wrapper {
     margin-top: 60px;
   }
-}
-  
-
-
-
-
-
-
-
-
-/* Menú de usuario */
-.user-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.user-menu {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  background-color: white;
-  color: #333;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  width: auto; /* Deja que se ajuste al contenido */
-  min-width: 150px;
-  display: none;
-}
-
-.user-dropdown:hover .user-menu {
-  display: block;  /* Muestra el menú al pasar el ratón */
-}
-
-.user-menu button {
-  background-color: #4A3AFF;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.user-menu p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-
-.bell-icon {
-  cursor: pointer;
-}
-
-.notifications ul {
-  list-style: none;
-  padding: 0;
-}
-
-.notifications li {
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
   .notifications {
-    width: 200px;  /* Ajusta el tamaño de la notificación */
-  }
-}
-
-
-/* Responsivo */
-@media (max-width: 768px) {
-  header {
-    height: 60px;
-    padding: 0 10px;
+    width: 100%;
+    max-width: 300px;
   }
 
-  .logo {
-    font-size: 20px;
+  .notifications li {
+    padding: 10px;
   }
-
-  .nav-btn {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .icon-btn {
-    width: 35px;
-    height: 35px;
-  }
-
-  .user-menu {
-    width: 120px;
-  }
-
-  .notifications {
-    width: 200px;
-  }
-}
-
-
-
-/* Flecha que apunta hacia la tarjeta (triángulo) */
-.arrow-up {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 10px solid #fff; /* Color de la flecha */
-  margin: 10px auto 0;
-}
-/* Para las notificaciones */
-.notifications {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background-color: white;
-  color: #333;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  width: auto;
-  z-index: 1000;
-  /* display: none; */
-}
-
-/* Flecha de las notificaciones */
-.notifications .arrow-up {
-  border-bottom-color: #fff; /* Color de la flecha */
 }

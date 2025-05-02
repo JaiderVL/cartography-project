@@ -30,7 +30,10 @@
   <h3>Eventos actuales</h3>
   <ul>
     <li *ngFor="let event of events">
-      {{ event.title }} - {{ event.timeFrom }} - {{ event.timeTo }} - {{ event.park }} - <a [routerLink]="['/home/activities']" class="btn ">Conoce mas</a>
+      {{ event.title }} - {{ event.timeFrom }} - {{ event.timeTo }} - {{ event.park }} - 
+      <!-- <a [routerLink]="['/home/activities']" class="btn ">Conoce mas</a> -->
+      <button class="btn" (click)="goToEvent(event)">Conocer más</button>
+
     </li>
   </ul>
 </div>

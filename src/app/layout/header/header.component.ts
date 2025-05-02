@@ -56,9 +56,12 @@ export class HeaderComponent implements OnInit {
 
   // Cerrar sesión
   logout() {
-    this.authService.logout().then(() => {
-      this.router.navigate(['/home']);
-    }).catch(error => console.error('Logout error:', error));
+    const confirmation = window.confirm('¿Estás seguro de que quieres cerrar sesión?');
+    if (confirmation) {
+      this.authService.logout().then(() => {
+        this.router.navigate(['/home']);
+      }).catch(error => console.error('Logout error:', error));
+    }
   }
 
   // Abrir/ cerrar las notificaciones
@@ -79,6 +82,7 @@ export class HeaderComponent implements OnInit {
 
   // Navegar a la página de actividades
   goToEvent(event: any) {
-    this.router.navigate(['/activities']);
+    this.router.navigate(['/home/activities']);
+    this.notificationsOpen = false;  // Cerrar la tarjeta de notificaciones
   }
 }
