@@ -1,11 +1,19 @@
 <div class="wrapper" id="map" #map></div>
 
+
 <div class="add-marker" *ngIf="userRole === 'administrador'">
-  <button class="btn btn-primary" (click)="createMarker()">+ agregar marcador</button>
+  <button class="btn btn-primary" (click)="openCreateMarkerModal()">+ agregar marcador</button>
 </div>
 
+<!-- Modal para crear marcador -->
+<app-create-marker-modal 
+  [isVisible]="showCreateMarkerModal"
+  [position]="markerModalPosition"
+  (closeModal)="closeCreateMarkerModal()"
+  (markerCreated)="onMarkerCreated($event)">
+</app-create-marker-modal>
 
-<div class="edit-mode-toggle" *ngIf="userRole === 'administrador'">
+<div class="edit-mode-toggle" *ngIf="userRole === 'administrador'"> 
   <button class="btn btn-primary" (click)="toggleEditMode()">
     {{ isEditMode ? 'Desactivar Modo Edición' : 'Activar Modo Edición' }}
   </button>

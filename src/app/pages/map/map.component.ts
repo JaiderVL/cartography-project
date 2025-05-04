@@ -2,20 +2,26 @@ import mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { LngLat, Map, Marker } from 'mapbox-gl';
+// import { LngLat, Map, Marker } from 'mapbox-gl';
+// import { Marker as MapboxMarker } from 'mapbox-gl';
+import { LngLat, Map, Marker as MapboxMarker } from 'mapbox-gl';
+
+
 import { MarkerService } from '../../core/services/marker.service';
 import { environment } from '../../../environments/environment.prod';
 import { PlaceCardComponent } from "./place-card/place-card.component";
 import { Marker as MarkerModel } from '../../core/models/marker.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service'; // Importamos AuthService
+import { CreateMarkerModalComponent } from '../create-marker-modal/create-marker-modal.component';
+
 
 mapboxgl.accessToken = environment.mapbox_key;
 
 interface MarkerAndColor {
   id: number;
   color: string;
-  marker: Marker;
+  marker: MapboxMarker;
   name: string;
   description: string;
   coverImage: string;
@@ -27,7 +33,7 @@ interface MarkerAndColor {
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [CommonModule, PlaceCardComponent],
+  imports: [CommonModule, PlaceCardComponent, CreateMarkerModalComponent],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
@@ -108,6 +114,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map = new Map({
       container: this.divMap.nativeElement,
       style: 'mapbox://styles/mapbox/streets-v12',
+      // ! se debe tener en cuenta esta ubicacion en donde se esta generando por defecto la ubicacion
       center: [-74.36476117425241, 4.338275508822856],
       zoom: 13,
     });
@@ -180,138 +187,10 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  // async createMarker(lnglat?: LngLat) {
-  //   if (!this.map) {
-  //     console.error('El mapa no está inicializado');
-  //     return;
-  //   }
 
-  //   // Activa el modo edición antes de crear el marcador
-  //   if (!this.isEditMode) {
-  //     this.isEditMode = true;
-  //     this.toggleEditMode();
-  //   }
-
-  //   const position = lnglat || this.map.getCenter();
-  //   const name = prompt('Por favor, ingresa un nombre para el nuevo marcador:');
-  //   const description = prompt('Por favor, ingresa una descripción para el marcador:');
-
-  //   // Puedes personalizar el color en el futuro
-  //   const color = prompt('Por favor, ingresa un color para el marcador (en formato hexadecimal):', '#ff0000') || '#ff0000';
-
-  //   // Solicita la URL de la imagen de portada
-  //   const coverImage = prompt('Ingresa la URL de la imagen de portada para el marcador:', '') || '';
-
-  //   // Suponemos que se solicitan 6 URLs de imágenes adicionales
-  //   const images = Array(6).fill(null).map((_, index) =>
-  //     prompt(`Ingresa la URL de la imagen ${index + 1} para el marcador (puede dejar vacío si no hay imagen):`, '') || ''
-  //   ).filter(url => url); // Filtra cualquier URL vacía
-
-  //   if (name && description) {
-  //     this.markerId++;
-  //     const id = this.markerId;
-
-  //     const marker = new Marker({
-  //       color: color,
-  //       draggable: true // Siempre lo hacemos arrastrable al crear el marcador
-  //     })
-  //       .setLngLat(position)
-  //       .addTo(this.map);
-
-  //     // Guarda el objeto marcador con un dragListener undefined inicialmente
-  //     const markerObj: MarkerAndColor = { id, color, marker, name, description, coverImage, images };
-
-  //     // Añade el evento de actualización si el modo de edición está activado
-  //     markerObj.dragListener = () => this.confirmMarkerUpdate(marker, id);
-  //     marker.on('dragend', markerObj.dragListener);
-
-  //     this.markers.push(markerObj);
-
-  //     const markerData: MarkerModel = { id, name, description, lng: position.lng, lat: position.lat, color, coverImage, images };
-  //     await this.saveMarkerToFirebaseAndLocalStorage(markerData, marker);
-
-  //     // Añadir evento para mostrar el nombre al pasar el cursor
-  //     this.addMarkerTooltip(marker, name);
-
-  //     // Añadir evento de clic para mostrar la tarjeta de detalles
-  //     marker.getElement().addEventListener('click', () => {
-  //       this.onMarkerClick(markerObj);
-  //     });
-  //   }
-  // }
-  async createMarker(lnglat?: LngLat) {
-    if (!this.map) {
-      console.error('El mapa no está inicializado');
-      return;
-    }
-  
-    // Activa el modo edición antes de crear el marcador
-    if (!this.isEditMode) {
-      this.isEditMode = true;
-      this.toggleEditMode();
-    }
-  
-    const position = lnglat || this.map.getCenter();
-    const name = prompt('Por favor, ingresa un nombre para el nuevo marcador:');
-    const description = prompt('Por favor, ingresa una descripción para el marcador:');
-    
-    // Solicitar detalles del marcador
-    const color = prompt('Por favor, ingresa un color para el marcador (en formato hexadecimal):', '#ff0000') || '#ff0000';
-    const coverImage = prompt('Ingresa la URL de la imagen de portada para el marcador:', '') || '';
-    
-    const images = Array(6).fill(null).map((_, index) =>
-      prompt(`Ingresa la URL de la imagen ${index + 1} para el marcador (puede dejar vacío si no hay imagen):`, '') || ''
-    ).filter(url => url); // Filtra las URLs vacías
-  
-    if (name && description) {
-      this.markerId++;
-      const id = this.markerId;
-  
-      // Crear el marcador en el mapa
-      const marker = new Marker({
-        color: color,
-        draggable: true
-      })
-      .setLngLat(position)
-      .addTo(this.map);
-  
-      // Guarda el objeto marcador con un dragListener undefined inicialmente
-      const markerObj: MarkerAndColor = { id, color, marker, name, description, coverImage, images };
-      markerObj.dragListener = () => this.confirmMarkerUpdate(marker, id);
-      marker.on('dragend', markerObj.dragListener);
-  
-      this.markers.push(markerObj);
-  
-      // Datos del marcador con ratings y averageRating
-      const markerData: MarkerModel = {
-        id, 
-        name, 
-        description, 
-        lng: position.lng, 
-        lat: position.lat, 
-        color, 
-        coverImage, 
-        images,
-        ratings: [], // Inicializamos el array de calificaciones vacío
-        averageRating: 0, // Inicializamos la calificación promedio a 0
-        userRatings:[],
-        comments:[],
-      };
-  
-      // Guardamos el marcador en Firebase y LocalStorage
-      await this.saveMarkerToFirebaseAndLocalStorage(markerData, marker);
-  
-      // Añadir eventos para el marcador
-      this.addMarkerTooltip(marker, name);
-      marker.getElement().addEventListener('click', () => {
-        this.onMarkerClick(markerObj);
-      });
-    }
-  }
-  
 
   // Añade el evento para mostrar un tooltip con el nombre del marcador
-  addMarkerTooltip(marker: Marker, name: string) {
+  addMarkerTooltip(marker: MapboxMarker, name: string) {
     const markerElement = marker.getElement();
     markerElement.title = name; // Usa el atributo `title` para mostrar el tooltip
   }
@@ -343,7 +222,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.selectedMarkerImages = []; // Limpia las imágenes adicionales del marcador seleccionado
   }
 
-  async saveMarkerToFirebaseAndLocalStorage(markerData: MarkerModel, marker: Marker) {
+  async saveMarkerToFirebaseAndLocalStorage(markerData: MarkerModel, marker: MapboxMarker) {
     try {
       console.log('Guardando nuevo marcador en Firebase:', markerData);
 
@@ -381,7 +260,7 @@ export class MapComponent implements OnInit, OnDestroy {
     console.log('Nuevo marcador agregado a localStorage:', markerData);
   }
 
-  async confirmMarkerUpdate(marker: Marker, id: number) {
+  async confirmMarkerUpdate(marker: MapboxMarker, id: number) {
     const newLngLat = marker.getLngLat();
     console.log(`Marcador con ID ${id} movido a nueva posición:`, newLngLat);
 
@@ -448,7 +327,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.markerId = Math.max(this.markerId, id);
 
       if (this.map) {
-        const marker = new Marker({
+        const marker = new MapboxMarker({
           color: color,
           draggable: this.isEditMode // Define si el marcador es arrastrable según el estado de edición
         })
@@ -506,7 +385,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.markerId = Math.max(this.markerId, id);
 
       if (this.map) {
-        const marker = new Marker({
+        const marker = new MapboxMarker({
           color: color,
           draggable: this.isEditMode // Define si el marcador es arrastrable según el estado de edición
         })
@@ -531,6 +410,93 @@ export class MapComponent implements OnInit, OnDestroy {
           this.onMarkerClick(markerObj);
         });
       }
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Añade estas propiedades a la clase
+  public showCreateMarkerModal = false;
+  public markerModalPosition = { lng: 0, lat: 0 };
+
+  // Reemplaza el método createMarker
+  openCreateMarkerModal() {
+    if (!this.map) {
+      console.error('El mapa no está inicializado');
+      return;
+    }
+
+    // Activa el modo edición antes de crear el marcador
+    if (!this.isEditMode) {
+      this.isEditMode = true;
+      this.toggleEditMode();
+    }
+
+    this.markerModalPosition = this.map.getCenter();
+    this.showCreateMarkerModal = true;
+  }
+
+  closeCreateMarkerModal() {
+    this.showCreateMarkerModal = false;
+  }
+
+  async onMarkerCreated(markerData: MarkerModel) { // Usa MarkerModel aquí
+      this.showCreateMarkerModal = false;
+      
+      if (!this.map) return;
+    
+      this.markerId++;
+      const id = this.markerId;
+    
+      const marker = new MapboxMarker({ // Usa MapboxMarker aquí
+        color: markerData.color,
+        draggable: true
+      })
+        .setLngLat([markerData.lng, markerData.lat])
+        .addTo(this.map);
+    
+      const markerObj: MarkerAndColor = { 
+        id, 
+        color: markerData.color, 
+        marker, 
+        name: markerData.name, 
+        description: markerData.description, 
+        coverImage: markerData.coverImage, 
+        images: markerData.images 
+      };
+    
+
+    markerObj.dragListener = () => this.confirmMarkerUpdate(marker, id);
+    marker.on('dragend', markerObj.dragListener);
+
+    this.markers.push(markerObj);
+
+    const fullMarkerData: MarkerModel = { 
+      ...markerData,
+      id,
+      ratings: [],
+      userRatings: [],
+      comments: [],
+      averageRating: 0
+    };
+
+    await this.saveMarkerToFirebaseAndLocalStorage(fullMarkerData, marker);
+    this.addMarkerTooltip(marker, markerData.name);
+    
+    marker.getElement().addEventListener('click', () => {
+      this.onMarkerClick(markerObj);
     });
   }
 }

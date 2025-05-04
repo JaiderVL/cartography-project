@@ -1,0 +1,52 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="close()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="close()">×</button>
+        
+        <h2>Crear Nuevo Marcador</h2>
+        
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+            <label for="name">Nombre del Parque</label>
+            <input id="name" [(ngModel)]="markerData.name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+            <label for="description">Descripción</label>
+            <textarea id="description" [(ngModel)]="markerData.description" name="description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+            <label for="color">Color del Marcador</label>
+            <input type="color" id="color" [(ngModel)]="markerData.color" name="color" value="#ff0000">
+            </div>
+            
+            <div class="form-group">
+            <label>Imagen de Portada</label>
+            <label class="file-input-label">
+                Seleccionar imagen
+                <input type="file" (change)="onCoverImageChange($event)" accept="image/*">
+            </label>
+            <div class="image-preview" *ngIf="coverImagePreview">
+                <img [src]="coverImagePreview" alt="Preview de imagen de portada">
+            </div>
+            </div>
+            
+            <div class="form-group">
+            <label>Imágenes Adicionales (Máx. 6)</label>
+            <label class="file-input-label">
+                Seleccionar imágenes
+                <input type="file" multiple (change)="onAdditionalImagesChange($event)" accept="image/*">
+            </label>
+            <div class="image-previews">
+                <div class="image-preview" *ngFor="let img of additionalImagesPreviews">
+                <img [src]="img" alt="Preview de imagen adicional">
+                </div>
+            </div>
+            </div>
+            
+            <button type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Guardando...' : 'Crear Marcador' }}
+            </button>
+        </form>
+        </div>
+    </div>
