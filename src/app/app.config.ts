@@ -9,6 +9,9 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments//environment.prod';
 
+import { provideStorage, getStorage } from '@angular/fire/storage';
+
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -19,6 +22,8 @@ export const appConfig: ApplicationConfig = {
     }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()) // Añade esto
+
   ]
 };
