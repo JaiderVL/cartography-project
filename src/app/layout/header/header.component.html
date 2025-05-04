@@ -7,6 +7,7 @@
     <!-- Botón de notificaciones -->
     <button class="nav-btn icon-btn bell-icon" *ngIf="isAuthenticated" (click)="toggleNotifications()">
       <i class="bi bi-bell-fill"></i>
+      <span *ngIf="hasNewEvents" class="badge">!</span>
     </button>
 
     <!-- Botón de usuario -->
@@ -24,16 +25,15 @@
   </div>
 </header>
 
+
 <!-- Notificaciones (eventos) -->
 <div *ngIf="notificationsOpen" class="notifications">
-  <div class="arrow-up"></div> <!-- Flecha -->
+  <div class="arrow-up"></div>
   <h3>Eventos actuales</h3>
   <ul>
-    <li *ngFor="let event of events">
+    <li *ngFor="let event of filteredEvents">
       {{ event.title }} - {{ event.timeFrom }} - {{ event.timeTo }} - {{ event.park }} - 
-      <!-- <a [routerLink]="['/home/activities']" class="btn ">Conoce mas</a> -->
-      <button class="btn" (click)="goToEvent(event)">Conocer más</button>
-
+      <a [routerLink]="['/home/activities']" class="btn" (click)="goToEvent(event)">Conocer más</a>
     </li>
   </ul>
 </div>

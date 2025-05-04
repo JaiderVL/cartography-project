@@ -130,6 +130,7 @@ header {
 }
 
 .bell-icon {
+  position: relative;
   cursor: pointer;
 }
 
@@ -155,6 +156,23 @@ header {
 
 .notifications .arrow-up {
   border-bottom-color: #fff;
+}
+
+/* Indicador de nuevos eventos en el icono de notificación */
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ========== MEDIA QUERIES ========== */
