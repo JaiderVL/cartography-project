@@ -21,7 +21,7 @@
 /* ------------------------- */
 /* TARJETA DE BIENVENIDA */
 /* ------------------------- */
-/* .container-body-welcome {
+/* .container-body-  {
   width: 100%;
   margin-bottom: 30px;
 } */
@@ -29,6 +29,7 @@
   width: 100%;
   margin-bottom: 30px;
   padding: 0; /* Eliminar padding interno */
+  border-radius: none;
 }
 
 .card-welcome {
@@ -291,7 +292,7 @@
 @media (max-width: 1200px) {
   .card-welcome {
     width: 100%;
-    border-radius: 0;
+    border-radius: none;
   }
   
   .card-body-welcome {

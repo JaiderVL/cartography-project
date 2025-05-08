@@ -1,99 +1,99 @@
-<div *ngIf="isLoading" class="loading-message">
-  <div class="spinner-border text-light" role="status">
-    <span class="visually-hidden">Cargando...</span>
+  <div *ngIf="isLoading" class="loading-message">
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Cargando marcadores...</p>
   </div>
-  <p>Cargando marcadores...</p>
-</div>
 
-<div *ngIf="errorMessage" class="error-message alert alert-danger">
-  {{ errorMessage }}
-</div>
+  <div *ngIf="errorMessage" class="error-message alert alert-danger">
+    {{ errorMessage }}
+  </div>
 
-<div *ngIf="!isLoading && !errorMessage" class="main-content">
+  <div *ngIf="!isLoading && !errorMessage" class="main-content">
 
-  <div class="container-body container-body-welcome">
-    <div class="card card-welcome">
-      <div class="card-body card-body-welcome">
-        <div class="welcome-header">
-          <div class="welcome-logo">
-            <img src="assets/images/logo.png" alt="Logo del proyecto" class="logo-image">
+    <div class="container-body container-body-welcome">
+      <div class="card card-welcome">
+        <div class="card-body card-body-welcome">
+          <div class="welcome-header">
+            <div class="welcome-logo">
+              <img src="assets/images/logo.png" alt="Logo del proyecto" class="logo-image">
+            </div>
+            <h2 class="welcome-title">Bienvenido a nuestro proyecto</h2>
           </div>
-          <h2 class="welcome-title">Bienvenido a nuestro proyecto</h2>
-        </div>
-        <div class="welcome-content">
-          <p>
-            Nuestra plataforma tiene como objetivo mapear y dar a conocer los parques y áreas verdes 
-            de nuestra comunidad, facilitando su descubrimiento y promoviendo su conservación.
-          </p>
-          <p>
-            Explora los marcadores en el mapa para encontrar información detallada sobre cada ubicación,
-            incluyendo imágenes, descripciones y valoraciones de otros usuarios.
-          </p>
-        </div>
-        <div class="welcome-footer">
-          <button class="btn btn-outline-light btn-sm" (click)="scrollToContent()">
-            <i class="bi bi-arrow-down"></i> Ver parques
-          </button>
+          <div class="welcome-content">
+            <p>
+              Nuestra plataforma tiene como objetivo mapear y dar a conocer los parques y áreas verdes 
+              de nuestra comunidad, facilitando su descubrimiento y promoviendo su conservación.
+            </p>
+            <p>
+              Explora los marcadores en el mapa para encontrar información detallada sobre cada ubicación,
+              incluyendo imágenes, descripciones y valoraciones de otros usuarios.
+            </p>
+          </div>
+          <div class="welcome-footer">
+            <button class="btn btn-outline-light btn-sm" (click)="scrollToContent()">
+              <i class="bi bi-arrow-down"></i> Ver parques
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Tarjeta de información principal -->
-  <div class="container-body container-body-info">
-    <div class="card card-info">
-      <div class="card-body card-body-info">
-        <h5 class="card-title card-title-info">
-          <i class="bi bi-geo-alt-fill location-marker" aria-hidden="true"></i>{{name}}
-        </h5>
-        <div class="grid-container grid-container-info">
-          <p class="card-text card-text-info">
-            {{description}}
-          </p>
-          <div class="image-container image-container-info">
-            <img class="img-fluid" 
-                 [src]="imageUrl" 
-                 [alt]="'Imagen de ' + (name || 'parque')"
-                 [title]="name || 'Parque'"
-                 (error)="onImageError($event)"
-                 [class.default-image]="imageUrl === defaultImageUrl">
+    <!-- Tarjeta de información principal -->
+    <div class="container-body container-body-info">
+      <div class="card card-info">
+        <div class="card-body card-body-info">
+          <h5 class="card-title card-title-info">
+            <i class="bi bi-geo-alt-fill location-marker" aria-hidden="true"></i>{{name}}
+          </h5>
+          <div class="grid-container grid-container-info">
+            <p class="card-text card-text-info">
+              {{description}}
+            </p>
+            <div class="image-container image-container-info">
+              <img class="img-fluid" 
+                  [src]="imageUrl" 
+                  [alt]="'Imagen de ' + (name || 'parque')"
+                  [title]="name || 'Parque'"
+                  (error)="onImageError($event)"
+                  [class.default-image]="imageUrl === defaultImageUrl">
+            </div>
+          </div>
+          <div class="text-center">
+            <a [routerLink]="['/home/map']" 
+              [queryParams]="{ markerId: currentMarkerId }" 
+              class="btn btn-primary visit-btn">
+              Visitar
+            </a>
           </div>
         </div>
-        <div class="text-center">
-          <a [routerLink]="['/home/map']" 
-             [queryParams]="{ markerId: currentMarkerId }" 
-             class="btn btn-primary visit-btn">
-            Visitar
+      </div>
+    </div>
+
+
+    <!-- Galería de parques -->
+    <div class="container-body container-body-img">
+      <div class="card card-img">
+        <h5 class="card-title card-title-img">
+          <i class="bi bi-binoculars-fill location-img" aria-hidden="true"></i> Parques
+        </h5>
+        <div class="card-body card-body-img">
+          <div class="image-container" *ngFor="let image of images">
+            <img [src]="image.src" 
+                [alt]="'Imagen de ' + (image.alt || 'parque')"
+                [title]="image.alt || 'Parque'"
+                (click)="loadMap(image)" 
+                (error)="onImageError($event)"
+                [class.default-image]="image.src === defaultImageUrl"
+                role="button"
+                tabindex="0">
+          </div>
+        </div>
+        <div class="text-center" style="padding-bottom: 15px;">
+          <a [routerLink]="['/home/map']" class="btn btn-primary visit-btn">
+            Ver todos
           </a>
         </div>
       </div>
     </div>
   </div>
-
-
-  <!-- Galería de parques -->
-  <div class="container-body container-body-img">
-    <div class="card card-img">
-      <h5 class="card-title card-title-img">
-        <i class="bi bi-binoculars-fill location-img" aria-hidden="true"></i> Parques
-      </h5>
-      <div class="card-body card-body-img">
-        <div class="image-container" *ngFor="let image of images">
-          <img [src]="image.src" 
-               [alt]="'Imagen de ' + (image.alt || 'parque')"
-               [title]="image.alt || 'Parque'"
-               (click)="loadMap(image)" 
-               (error)="onImageError($event)"
-               [class.default-image]="image.src === defaultImageUrl"
-               role="button"
-               tabindex="0">
-        </div>
-      </div>
-      <div class="text-center" style="padding-bottom: 15px;">
-        <a [routerLink]="['/home/map']" class="btn btn-primary visit-btn">
-          Ver todos
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
