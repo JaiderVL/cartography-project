@@ -2,39 +2,56 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
 
 /* Estilos base */
-.wrapper {
+/* .wrapper {
   margin: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   width: 100%;
-}
+} */
 
 /* Contenedor principal */
 .main-content {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  /* padding: 20px; */
+  box-sizing: border-box;
 }
 
 /* ------------------------- */
 /* TARJETA DE BIENVENIDA */
 /* ------------------------- */
+/* .container-body-welcome {
+  width: 100%;
+  margin-bottom: 30px;
+} */
 .container-body-welcome {
   width: 100%;
   margin-bottom: 30px;
+  padding: 0; /* Eliminar padding interno */
 }
 
 .card-welcome {
   background: linear-gradient(to bottom, rgba(28, 31, 55, 0.9), rgba(0, 0, 0, 0.9));
-  border-radius: 12px;
+  /* border-radius: 12px; */
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   border: none;
-  margin: 0 auto;
-  width: 95%;
+  margin: 0;
+  /* width: 95%; */
+}
+.card-welcome {
+  background: linear-gradient(to bottom, rgba(28, 31, 55, 0.9), rgba(0, 0, 0, 0.9));
+  /* border-radius: 12px; */
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  border: none;
+  padding: none;
+  width: 100%; /* Cambiar a 100% */
+  max-width: 100%; /* Asegurar que no tenga límite */
+  margin: 0; /* Eliminar margen automático */
 }
 
 .card-body-welcome {
@@ -105,7 +122,7 @@
   width: 100%;
   max-width: 30rem;
   margin: 0 auto;
-  padding: 20px;
+  padding: 25px;
 }
 
 .card-info, 
@@ -116,6 +133,9 @@
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+}
+.card-img{
+  padding: 25px;
 }
 
 .card-info:hover, 
@@ -141,7 +161,7 @@
 }
 
 .location-marker {
-  color: red;
+  color: #0d6efd;
   margin-right: 10px;
 }
 
@@ -301,8 +321,8 @@
   }
   
   .card-welcome {
-    border-radius: 10px;
-    width: calc(100% - 30px);
+    /* border-radius: 10px; */
+    /* width: calc(100% - 30px); */
   }
   
   .welcome-title {
@@ -338,7 +358,7 @@
   }
   
   .card-welcome {
-    width: calc(100% - 20px);
+    /* width: calc(100% - 20px); */
     margin-bottom: 20px;
   }
   
